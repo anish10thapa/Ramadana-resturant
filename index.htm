@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ramada by Wyndham Itahari — Eastern Nepal's First International Hotel</title>
+<meta name="description" content="Ramada by Wyndham Itahari — 81 luxury rooms, all-day dining, outdoor pool, spa and world-class events at Pashupati Marg, Itahari-4, Sunsari District.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tenor+Sans&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{
+  --navy:#07111e;--navy2:#0d1c2e;--navy3:#122438;
+  --gold:#c9a84c;--gold2:#e8c96e;--gold3:#a07830;
+  --champagne:#f5ead4;--ch2:rgba(245,234,212,.55);--ch3:rgba(245,234,212,.28);
+  --line:rgba(255,255,255,.08);--lineG:rgba(201,168,76,.22);
+  --smoke:rgba(255,255,255,.05);
+  --serif:'EB Garamond',Georgia,serif;
+  --sans:'Montserrat',sans-serif;
+  --display:'Tenor Sans',sans-serif;
+  --tr:all .4s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;scroll-behavior:smooth}
+body{background:var(--navy);color:var(--champagne);font-family:var(--sans);overflow-x:hidden;line-height:1.65;cursor:none}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{cursor:pointer}
+input,textarea,select{font-family:var(--sans);color:var(--champagne);background:transparent;border:none;outline:none}
+input::placeholder,textarea::placeholder{color:var(--ch3)}
+select option{background:var(--navy2)}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--navy)}
+::-webkit-scrollbar-thumb{background:var(--gold3)}
+
+body::after{content:'';position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.022;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px}
+
+/* CURSOR */
+#cr,#cd{position:fixed;top:0;left:0;border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);will-change:transform;transition:width .2s,height .2s,border-color .2s,background .2s}
+#cr{width:34px;height:34px;border:1px solid rgba(201,168,76,.38)}
+#cd{width:5px;height:5px;background:var(--gold);transition:width .12s,height .12s}
+.chov #cr{width:50px;height:50px;border-color:var(--gold);background:rgba(201,168,76,.07)}
+
+/* CANVAS */
+#bgc{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.45}
+
+/* LOADER */
+#loader{position:fixed;inset:0;z-index:10000;background:var(--navy);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;transition:opacity 1.1s,visibility 1.1s}
+#loader.out{opacity:0;visibility:hidden}
+.ld-deco{display:flex;align-items:center;gap:12px;opacity:0;animation:ldUp .8s .3s forwards}
+.ld-line{width:60px;height:1px}
+.ld-line.l{background:linear-gradient(90deg,transparent,var(--gold))}
+.ld-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.ld-diamond{width:20px;height:20px;border:1.5px solid var(--gold);transform:rotate(45deg);animation:spinD 3s linear infinite;position:relative;flex-shrink:0}
+.ld-diamond::before{content:'';position:absolute;inset:4px;background:rgba(201,168,76,.25)}
+.ld-logo{font-family:var(--display);font-size:clamp(32px,7vw,64px);letter-spacing:.18em;color:var(--gold);text-transform:uppercase;text-shadow:0 0 60px rgba(201,168,76,.5);opacity:0;animation:ldUp .9s .5s forwards}
+.ld-sub{font-family:var(--sans);font-size:10px;font-weight:300;letter-spacing:.5em;text-transform:uppercase;color:var(--ch3);opacity:0;animation:ldUp .7s .7s forwards}
+.ld-track{width:200px;height:1px;background:rgba(255,255,255,.07);position:relative;overflow:hidden;opacity:0;animation:ldUp .5s .9s forwards}
+.ld-fill{position:absolute;top:0;left:0;height:100%;width:0;background:linear-gradient(90deg,var(--gold3),var(--gold),var(--gold2));box-shadow:0 0 16px var(--gold);transition:width 1.8s cubic-bezier(.4,0,.2,1)}
+@keyframes ldUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spinD{to{transform:rotate(405deg)}}
+
+/* PAGE WIPE */
+#pw-veil{position:fixed;inset:0;z-index:600;display:grid;grid-template-columns:repeat(6,1fr);pointer-events:none}
+.pvc{height:100%;background:var(--navy2);transform:scaleY(0)}
+#pw-veil.in .pvc{animation:pvIn .46s cubic-bezier(.77,0,.175,1) forwards}
+#pw-veil.out .pvc{animation:pvOut .46s cubic-bezier(.77,0,.175,1) forwards}
+.pvc:nth-child(1){animation-delay:0s!important}.pvc:nth-child(2){animation-delay:.04s!important}
+.pvc:nth-child(3){animation-delay:.08s!important}.pvc:nth-child(4){animation-delay:.12s!important}
+.pvc:nth-child(5){animation-delay:.16s!important}.pvc:nth-child(6){animation-delay:.2s!important}
+@keyframes pvIn{from{transform:scaleY(0);transform-origin:bottom}to{transform:scaleY(1);transform-origin:bottom}}
+@keyframes pvOut{from{transform:scaleY(1);transform-origin:top}to{transform:scaleY(0);transform-origin:top}}
+
+/* NAV */
+#nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:30px 64px;transition:var(--tr)}
+#nav.solid{padding:14px 64px;background:rgba(7,17,30,.97);backdrop-filter:blur(28px);border-bottom:1px solid var(--line)}
+.nav-brand{display:flex;flex-direction:column;cursor:pointer}
+.nav-brand-name{font-family:var(--display);font-size:22px;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;text-shadow:0 0 28px rgba(201,168,76,.3)}
+.nav-brand-sub{font-family:var(--sans);font-size:8px;font-weight:300;letter-spacing:.48em;text-transform:uppercase;color:var(--ch3);margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nl{background:none;border:none;font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:var(--ch3);padding:10px 15px;transition:var(--tr);position:relative}
+.nl::after{content:'';position:absolute;bottom:5px;left:15px;right:15px;height:1px;background:var(--gold);transform:scaleX(0);transition:transform .3s}
+.nl:hover,.nl.active{color:var(--gold2)}
+.nl:hover::after,.nl.active::after{transform:scaleX(1)}
+.nav-book{background:transparent;border:1px solid var(--gold);color:var(--gold);font-family:var(--sans);font-size:10px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;padding:11px 24px;transition:var(--tr);position:relative;overflow:hidden}
+.nav-book::before{content:'';position:absolute;inset:0;background:var(--gold);transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1);z-index:0}
+.nav-book span{position:relative;z-index:1;transition:color .35s}
+.nav-book:hover::before{transform:translateX(0)}
+.nav-book:hover span{color:var(--navy)}
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:4px}
+.nav-ham span{display:block;width:22px;height:1px;background:var(--gold);transition:var(--tr)}
+
+/* MOBILE MENU */
+#mob{position:fixed;inset:0;z-index:800;background:rgba(7,17,30,.99);backdrop-filter:blur(20px);display:flex;flex-direction:column;align-items:center;justify-content:center;transform:translateX(100%);transition:transform .45s cubic-bezier(.77,0,.175,1)}
+#mob.open{transform:translateX(0)}
+.mob-l{font-family:var(--display);font-size:clamp(28px,6vw,52px);letter-spacing:.14em;text-transform:uppercase;color:var(--ch3);background:none;border:none;padding:13px 40px;width:100%;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);transition:var(--tr)}
+.mob-l:hover{color:var(--gold2)}
+.mob-x{position:absolute;top:24px;right:48px;background:none;border:none;color:var(--ch3);font-size:26px;transition:var(--tr)}
+.mob-x:hover{color:var(--gold)}
+
+/* PAGES */
+#page-wrap{position:relative;z-index:10}
+.page{min-height:100vh;display:none;animation:pgIn .65s ease forwards}
+.page.active{display:block}
+@keyframes pgIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* LAYOUT */
+.wrap{max-width:1340px;margin:0 auto;padding:0 64px}
+.sec-label{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.55em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.sec-label::before{content:'';display:block;width:32px;height:1px;background:var(--gold)}
+.sec-title{font-family:var(--serif);font-size:clamp(34px,5vw,72px);font-weight:400;line-height:.95;letter-spacing:-.01em}
+.sec-title em{color:var(--gold2);font-style:italic}
+.sec-body{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ch2);line-height:1.8;max-width:560px}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .75s ease,transform .75s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .75s ease,transform .75s ease}
+.rv-l.in{opacity:1;transform:translateX(0)}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .75s ease,transform .75s ease}
+.rv-r.in{opacity:1;transform:translateX(0)}
+
+/* BUTTONS */
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--gold);color:var(--navy);border:none;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;padding:15px 34px;transition:var(--tr);position:relative;overflow:hidden}
+.btn-primary::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.18);transform:translateX(-100%);transition:transform .3s}
+.btn-primary:hover::after{transform:translateX(0)}
+.btn-primary:hover{box-shadow:0 0 40px rgba(201,168,76,.45);transform:translateY(-2px)}
+.btn-outline{display:inline-flex;align-items:center;gap:10px;background:transparent;border:1px solid rgba(245,234,212,.22);color:var(--champagne);font-family:var(--sans);font-size:10px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;padding:14px 34px;transition:var(--tr)}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,.07);transform:translateY(-2px)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;background:transparent;border:none;color:var(--gold);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;padding:8px 0;border-bottom:1px solid rgba(201,168,76,.32);transition:var(--tr)}
+.btn-ghost:hover{gap:14px}
+.deco-div{display:flex;align-items:center;gap:14px;margin:28px 0}
+.deco-div-line{flex:1;height:1px;background:rgba(201,168,76,.22)}
+.deco-div-diamond{width:8px;height:8px;border:1px solid var(--gold);transform:rotate(45deg);flex-shrink:0}
+
+/* TOAST */
+#toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(14px);background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.25em;text-transform:uppercase;padding:13px 26px;z-index:9000;opacity:0;transition:all .35s;pointer-events:none;white-space:nowrap;box-shadow:0 6px 24px rgba(201,168,76,.4)}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* LIGHTBOX */
+#lb{position:fixed;inset:0;z-index:2000;background:rgba(7,17,30,.97);backdrop-filter:blur(24px);display:flex;align-items:center;justify-content:center;padding:40px;opacity:0;visibility:hidden;transition:opacity .4s,visibility .4s}
+#lb.open{opacity:1;visibility:visible}
+#lb-wrap{position:relative;max-width:980px;width:100%}
+#lb-img{width:100%;max-height:82vh;object-fit:contain;transform:scale(.9);transition:transform .45s cubic-bezier(.34,1.56,.64,1);box-shadow:0 40px 100px rgba(0,0,0,.85)}
+#lb.open #lb-img{transform:scale(1)}
+#lb-x{position:absolute;top:-16px;right:-16px;width:42px;height:42px;background:var(--gold);color:var(--navy);border:none;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:var(--tr)}
+#lb-x:hover{background:var(--gold2);transform:rotate(90deg)}
+.lb-arr{position:absolute;top:50%;transform:translateY(-50%);width:50px;height:50px;background:rgba(7,17,30,.7);border:1px solid var(--line);color:var(--champagne);font-size:20px;display:flex;align-items:center;justify-content:center;transition:var(--tr);z-index:5}
+.lb-arr:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+#lb-prev{left:-68px}#lb-next{right:-68px}
+#lb-cap{position:absolute;bottom:-44px;left:0;right:0;text-align:center;font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch3)}
+#lb-ctr{position:absolute;top:-44px;right:0;font-family:var(--sans);font-size:9px;letter-spacing:.3em;color:var(--ch3);text-transform:uppercase}
+
+/* MODAL */
+.modal{position:fixed;inset:0;z-index:1500;background:rgba(7,17,30,.96);backdrop-filter:blur(22px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.modal.open{opacity:1;visibility:visible}
+.modal-box{background:var(--navy2);border:1px solid rgba(201,168,76,.2);width:100%;max-width:600px;max-height:90vh;overflow-y:auto;transform:scale(.95) translateY(14px);transition:transform .35s cubic-bezier(.34,1.56,.64,1);scrollbar-width:thin;scrollbar-color:var(--gold3) transparent}
+.modal.open .modal-box{transform:scale(1) translateY(0)}
+.modal-hd{padding:28px 32px 22px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.modal-ttl{font-family:var(--serif);font-size:28px;font-style:italic}
+.modal-x{background:none;border:none;color:var(--ch3);font-size:22px;transition:var(--tr);line-height:1}
+.modal-x:hover{color:var(--gold);transform:rotate(90deg)}
+.modal-bd{padding:28px 32px 32px}
+.fg{margin-bottom:18px}
+.fl{display:block;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.38em;text-transform:uppercase;color:var(--ch3);margin-bottom:8px}
+.fi{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--line);color:var(--champagne);padding:13px 15px;font-family:var(--serif);font-size:16px;transition:var(--tr)}
+.fi:focus{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fs{width:100%;background:var(--gold);color:var(--navy);border:none;padding:15px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;margin-top:6px;transition:var(--tr)}
+.fs:hover{background:var(--gold2);box-shadow:0 0 36px rgba(201,168,76,.4)}
+
+/* FAB */
+#fab{position:fixed;bottom:28px;right:28px;z-index:400;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.fab-wa{width:52px;height:52px;border-radius:50%;background:#25d366;color:#fff;border:none;font-size:22px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 22px rgba(37,211,102,.35);transition:var(--tr)}
+.fab-wa:hover{transform:scale(1.1) translateY(-2px)}
+.fab-bk{background:var(--gold);color:var(--navy);border:none;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:11px 15px;text-align:center;line-height:1.4;transition:var(--tr);box-shadow:0 4px 22px rgba(201,168,76,.3)}
+.fab-bk:hover{background:var(--gold2);transform:translateY(-2px)}
+
+/* ===== HERO ===== */
+#hero{min-height:100vh;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:130px 40px 100px;overflow:hidden}
+.hero-video{position:absolute;inset:0;overflow:hidden}
+.hero-video video,.hero-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.28) saturate(1.15)}
+.hero-grad{position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 50% 100%,rgba(201,168,76,.07) 0%,transparent 70%)}
+.hero-bot{position:absolute;bottom:0;left:0;right:0;height:35%;background:linear-gradient(transparent,var(--navy))}
+.hero-frame{position:absolute;inset:32px;border:1px solid rgba(201,168,76,.09);pointer-events:none}
+.hero-frame::before,.hero-frame::after{content:'';position:absolute;width:40px;height:40px;border-color:var(--gold);border-style:solid}
+.hero-frame::before{top:-1px;left:-1px;border-width:2px 0 0 2px}
+.hero-frame::after{bottom:-1px;right:-1px;border-width:0 2px 2px 0}
+.h-content{position:relative;z-index:2}
+.h-badge{display:inline-flex;align-items:center;gap:12px;font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.55em;text-transform:uppercase;color:var(--gold);margin-bottom:26px;opacity:0;animation:hUp .7s 2.1s forwards}
+.h-badge::before,.h-badge::after{content:'';display:block;width:30px;height:1px;background:var(--gold)}
+.h-name{font-family:var(--display);font-size:clamp(58px,12vw,160px);letter-spacing:.06em;text-transform:uppercase;color:var(--gold);line-height:.88;text-shadow:0 0 100px rgba(201,168,76,.5),0 0 220px rgba(201,168,76,.2);margin-bottom:10px;opacity:0;animation:hUp 1s 2.3s forwards}
+.h-by{font-family:var(--serif);font-size:clamp(14px,2vw,22px);font-style:italic;color:var(--ch2);letter-spacing:.14em;margin-bottom:16px;opacity:0;animation:hUp .7s 2.5s forwards}
+.h-rule{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:20px;opacity:0;animation:hUp .5s 2.65s forwards}
+.h-rule-line{width:60px;height:1px}
+.h-rule-line.l{background:linear-gradient(90deg,transparent,var(--gold))}
+.h-rule-line.r{background:linear-gradient(90deg,var(--gold),transparent)}
+.h-rule-dia{width:7px;height:7px;border:1.5px solid var(--gold);transform:rotate(45deg)}
+.h-desc{font-family:var(--serif);font-size:clamp(15px,1.7vw,20px);font-style:italic;color:var(--ch2);margin-bottom:10px;opacity:0;animation:hUp .7s 2.75s forwards}
+.h-loc{font-family:var(--sans);font-size:9px;font-weight:400;letter-spacing:.33em;text-transform:uppercase;color:var(--ch3);margin-bottom:52px;opacity:0;animation:hUp .7s 2.88s forwards}
+.h-ctas{display:flex;gap:13px;justify-content:center;flex-wrap:wrap;opacity:0;animation:hUp .7s 3s forwards}
+.h-scroll{position:absolute;bottom:38px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:hUp .6s 3.2s forwards}
+.h-scroll span{font-family:var(--sans);font-size:9px;letter-spacing:.4em;text-transform:uppercase;color:var(--ch3)}
+.hsl{width:1px;height:50px;background:linear-gradient(var(--gold),transparent);animation:sbob 2.2s ease-in-out infinite}
+@keyframes hUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+@keyframes sbob{0%,100%{opacity:1}50%{opacity:.2}}
+
+/* AMENITIES BAR */
+.am-bar{background:var(--navy2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.am-bar-grid{display:grid;grid-template-columns:repeat(6,1fr)}
+.am-cell{padding:40px 20px;text-align:center;border-right:1px solid var(--line);transition:var(--tr)}
+.am-cell:last-child{border-right:none}
+.am-cell:hover{background:rgba(201,168,76,.04)}
+.am-icon{font-size:26px;margin-bottom:12px}
+.am-label{font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ch3)}
+
+/* ROOMS INTRO */
+.rooms-intro{padding:100px 0}
+.rooms-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--lineG);margin-top:52px}
+.room-card{background:var(--navy2);overflow:hidden;transition:var(--tr);cursor:pointer}
+.room-card:hover{transform:translateY(-6px);box-shadow:0 24px 64px rgba(0,0,0,.6);z-index:2}
+.rc-img{height:270px;overflow:hidden;position:relative}
+.rc-img img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.room-card:hover .rc-img img{transform:scale(1.08)}
+.rc-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(7,17,30,.88) 100%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.room-card:hover .rc-ov{opacity:1}
+.rc-ov-type{font-family:var(--sans);font-size:8px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:4px}
+.rc-ov-name{font-family:var(--serif);font-size:18px;font-style:italic}
+.rc-body{padding:22px 24px 20px}
+.rc-type{font-family:var(--sans);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.rc-name{font-family:var(--serif);font-size:22px;font-weight:500;margin-bottom:8px}
+.rc-desc{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch2);line-height:1.55;margin-bottom:14px}
+.rc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px}
+.rc-tag{font-family:var(--sans);font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--ch3);background:var(--smoke);border:1px solid var(--line);padding:3px 8px}
+.rc-foot{display:flex;align-items:center;justify-content:space-between;padding-top:14px;border-top:1px solid var(--line)}
+.rc-rate{font-family:var(--serif);font-size:26px;color:var(--gold)}
+.rc-per{font-family:var(--sans);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--ch3);margin-top:3px}
+.rc-btn{font-family:var(--sans);font-size:8px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;background:transparent;border:1px solid rgba(201,168,76,.3);color:var(--gold);padding:9px 17px;transition:var(--tr)}
+.rc-btn:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+
+/* PHOTO MOSAIC */
+.mosaic{display:grid;grid-template-columns:1.9fr 1fr 1fr;grid-template-rows:380px 280px;gap:3px}
+.mc{position:relative;overflow:hidden;cursor:zoom-in}
+.mc.sp-r{grid-row:span 2}.mc.sp-c{grid-column:span 2}
+.mc img{width:100%;height:100%;object-fit:cover;transition:transform .7s ease}
+.mc:hover img{transform:scale(1.07)}
+.mc-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(7,17,30,.9) 100%);opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:22px}
+.mc:hover .mc-ov{opacity:1}
+.mc-name{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--gold2)}
+.mc-sub{font-family:var(--sans);font-size:8px;letter-spacing:.26em;text-transform:uppercase;color:var(--ch3);margin-top:3px}
+.mc-zoom{position:absolute;top:12px;right:12px;background:rgba(7,17,30,.82);border:1px solid rgba(201,168,76,.2);color:var(--gold);font-family:var(--sans);font-size:8px;letter-spacing:.16em;padding:4px 10px;text-transform:uppercase;opacity:0;transition:opacity .3s;backdrop-filter:blur(8px)}
+.mc:hover .mc-zoom{opacity:1}
+
+/* STATS */
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-c{padding:52px 28px;text-align:center;border-right:1px solid var(--line);transition:var(--tr);position:relative}
+.stat-c:last-child{border-right:none}
+.stat-c::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .4s}
+.stat-c:hover::before{opacity:1}
+.stat-num{font-family:var(--serif);font-size:clamp(40px,4.5vw,66px);font-weight:400;color:var(--gold);line-height:1;margin-bottom:10px}
+.stat-lbl{font-family:var(--sans);font-size:9px;letter-spacing:.28em;text-transform:uppercase;color:var(--ch3)}
+
+/* EXPERIENCES */
+.exp-sec{padding:100px 0}
+.exp-grid{display:grid;grid-template-columns:1fr 1fr;gap:78px;align-items:center}
+.exp-img{position:relative;height:560px;overflow:hidden;cursor:zoom-in}
+.exp-img img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.exp-img:hover img{transform:scale(1.04)}
+.exp-frame{position:absolute;inset:18px;border:1px solid rgba(201,168,76,.17);pointer-events:none}
+.exp-frame::before,.exp-frame::after{content:'';position:absolute;width:30px;height:30px;border-color:var(--gold);border-style:solid}
+.exp-frame::before{top:-1px;left:-1px;border-width:1.5px 0 0 1.5px}
+.exp-frame::after{bottom:-1px;right:-1px;border-width:0 1.5px 1.5px 0}
+.exp-badge{position:absolute;bottom:0;right:26px;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:10px 18px}
+.exp-list{margin-top:28px}
+.exp-item{display:flex;align-items:flex-start;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.exp-item:first-child{border-top:1px solid var(--line)}
+.exp-icon{width:42px;height:42px;flex-shrink:0;background:rgba(201,168,76,.06);border:1px solid rgba(201,168,76,.18);display:flex;align-items:center;justify-content:center;font-size:18px}
+.exp-name{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:4px}
+.exp-desc{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch2);line-height:1.55}
+
+/* DINING */
+.dining-sec{padding:100px 0;background:var(--navy3)}
+.dining-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--lineG);margin-top:52px}
+.dc{background:var(--navy3);overflow:hidden;transition:var(--tr);cursor:pointer}
+.dc:hover{transform:translateY(-5px);box-shadow:0 22px 60px rgba(0,0,0,.6);z-index:2}
+.dc-img{height:250px;overflow:hidden;position:relative}
+.dc-img img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.dc:hover .dc-img img{transform:scale(1.1)}
+.dc-tag{position:absolute;bottom:12px;left:12px;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px}
+.dc-body{padding:24px 26px 22px}
+.dc-name{font-family:var(--serif);font-size:21px;font-weight:500;margin-bottom:7px}
+.dc-desc{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch2);line-height:1.6;margin-bottom:14px}
+.dc-hours{font-family:var(--sans);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold3)}
+
+/* VIDEO SECTION */
+.vid-sec{position:relative;height:70vh;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.vid-sec video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.26)}
+.vid-sec-fb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.26)}
+.vid-ov{position:absolute;inset:0;background:linear-gradient(180deg,var(--navy) 0%,transparent 18%,transparent 82%,var(--navy) 100%)}
+.vid-content{position:relative;z-index:2;text-align:center;padding:40px;max-width:880px}
+
+/* EVENTS PROMO */
+.ev-promo{padding:100px 0;background:var(--navy2)}
+.ev-promo-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:78px;align-items:center}
+.ev-img-col{position:relative}
+.ev-img-main{height:500px;overflow:hidden;cursor:zoom-in}
+.ev-img-main img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.ev-img-main:hover img{transform:scale(1.04)}
+.ev-img-float{position:absolute;bottom:-26px;right:-26px;width:195px;height:195px;overflow:hidden;border:4px solid var(--navy2)}
+.ev-img-float img{width:100%;height:100%;object-fit:cover}
+
+/* REWARDS */
+.rewards{background:linear-gradient(135deg,var(--navy3) 0%,var(--navy2) 100%);border:1px solid rgba(201,168,76,.18);padding:70px 0;position:relative;overflow:hidden}
+.rewards::before{content:'';position:absolute;top:-40%;right:-8%;width:500px;height:500px;background:radial-gradient(circle,rgba(201,168,76,.07) 0%,transparent 70%);pointer-events:none}
+.rewards-inner{display:flex;align-items:center;justify-content:space-between;gap:48px;flex-wrap:wrap}
+.rewards-stats{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--lineG);min-width:360px}
+.rstat{background:var(--navy2);padding:26px;text-align:center}
+.rstat-n{font-family:var(--serif);font-size:38px;color:var(--gold);line-height:1;margin-bottom:6px}
+.rstat-l{font-family:var(--sans);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--ch3)}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,210px);gap:3px}
+.gc{overflow:hidden;cursor:zoom-in;position:relative}
+.gc.wide{grid-column:span 2}
+.gc img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.gc:hover img{transform:scale(1.08)}
+.gc-ov{position:absolute;inset:0;background:rgba(7,17,30,.55);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .35s;font-size:26px}
+.gc:hover .gc-ov{opacity:1}
+
+/* FOOTER */
+#footer{background:var(--navy2);border-top:1px solid var(--line);padding:80px 64px 40px}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:56px;margin-bottom:48px}
+.f-logo{font-family:var(--display);font-size:44px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);text-shadow:0 0 36px rgba(201,168,76,.25)}
+.f-sub{font-family:var(--sans);font-size:8px;letter-spacing:.44em;text-transform:uppercase;color:var(--ch3);margin-bottom:16px}
+.f-desc{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ch2);line-height:1.78;margin-bottom:20px}
+.f-addr{font-family:var(--sans);font-size:12px;color:var(--ch3);line-height:2}
+.fcol-title{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.f-links{list-style:none}
+.f-links li{margin-bottom:10px}
+.f-links a,.f-links button{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch3);background:none;border:none;padding:0;transition:color .3s}
+.f-links a:hover,.f-links button:hover{color:var(--gold2)}
+.fc-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:12px;font-family:var(--sans);font-size:12px;color:var(--ch3);line-height:1.6}
+.fc-row a{color:var(--ch2);transition:color .3s}
+.fc-row a:hover{color:var(--gold)}
+.footer-div{border:none;border-top:1px solid var(--line);margin:0 0 26px}
+.footer-btm{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px}
+.footer-copy{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ch3)}
+.footer-soc{display:flex;gap:8px}
+.footer-si{width:34px;height:34px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:14px;transition:var(--tr)}
+.footer-si:hover{border-color:var(--gold);background:rgba(201,168,76,.08)}
+
+/* ===== ROOMS PAGE ===== */
+.page-hero{height:50vh;position:relative;display:flex;align-items:flex-end;padding-bottom:64px;overflow:hidden}
+.ph-bg{position:absolute;inset:0}
+.ph-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.26)}
+.ph-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(transparent,var(--navy))}
+.rooms-all-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:3px;background:var(--lineG)}
+
+/* ===== DINING PAGE ===== */
+.dd-grid{display:grid;grid-template-columns:1fr 1fr;gap:78px;align-items:start}
+.dd-img{height:480px;overflow:hidden;cursor:zoom-in}
+.dd-img img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.dd-img:hover img{transform:scale(1.05)}
+.dd-text p{font-family:var(--serif);font-size:17px;color:var(--ch2);line-height:1.88;margin-bottom:18px;font-style:italic}
+.dd-text p strong{color:var(--champagne);font-style:normal}
+.mh-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:2px;background:var(--lineG);margin-top:52px}
+.mh{background:var(--navy2);overflow:hidden;transition:var(--tr);cursor:pointer}
+.mh:hover{transform:translateY(-4px);box-shadow:0 20px 54px rgba(0,0,0,.55);z-index:2}
+.mh-img{height:190px;overflow:hidden}
+.mh-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+.mh:hover .mh-img img{transform:scale(1.1)}
+.mh-body{padding:18px 20px 16px}
+.mh-name{font-family:var(--serif);font-size:19px;margin-bottom:5px}
+.mh-desc{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--ch2);line-height:1.5;margin-bottom:12px}
+.mh-price{font-family:var(--serif);font-size:22px;color:var(--gold)}
+
+/* ===== EVENTS PAGE ===== */
+.ev-hero-bg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22)}
+.ev-hero-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22)}
+.ev-hero-bg::after{content:'';position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(transparent,var(--navy))}
+.ev-tabs{display:flex;gap:4px;padding:34px 64px 16px;flex-wrap:wrap}
+.evtab{background:none;border:1px solid var(--line);color:var(--ch3);font-family:var(--sans);font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;padding:9px 22px;transition:var(--tr)}
+.evtab.active,.evtab:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+.ev-list{padding:0 64px 72px}
+.ev-card{display:grid;grid-template-columns:380px 1fr;background:var(--navy2);border:1px solid var(--line);margin-bottom:22px;overflow:hidden;transition:var(--tr)}
+.ev-card:hover{border-color:rgba(201,168,76,.2);box-shadow:0 14px 54px rgba(0,0,0,.5)}
+.ev-card-img{position:relative;overflow:hidden;min-height:270px}
+.ev-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.ev-card:hover .ev-card-img img{transform:scale(1.06)}
+.ev-date-badge{position:absolute;top:16px;left:16px;background:var(--gold);color:var(--navy);text-align:center;padding:8px 12px;min-width:56px}
+.evdb-day{font-family:var(--serif);font-size:30px;font-weight:600;line-height:1}
+.evdb-mon{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+.ev-live{position:absolute;top:16px;right:16px;background:#9b1c2e;color:#fff;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px;animation:lblink 1.8s ease-in-out infinite}
+@keyframes lblink{0%,100%{opacity:1}50%{opacity:.35}}
+.ev-body{padding:32px 38px;display:flex;flex-direction:column;justify-content:center}
+.ev-cat{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ev-title{font-family:var(--serif);font-size:clamp(22px,2.6vw,36px);font-weight:400;line-height:1.1;margin-bottom:12px}
+.ev-desc{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ch2);line-height:1.65;margin-bottom:16px}
+.ev-meta{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:22px}
+.ev-mi{display:flex;align-items:center;gap:6px;font-family:var(--sans);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ch2)}
+.ev-cd{display:flex;gap:12px;margin-bottom:22px}
+.cd-unit{text-align:center}
+.cd-num{font-family:var(--serif);font-size:34px;font-weight:300;color:var(--gold);line-height:1}
+.cd-lbl{font-family:var(--sans);font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--ch3)}
+.cd-sep{font-family:var(--serif);font-size:26px;color:var(--ch3);align-self:flex-start;padding-top:4px}
+.ev-acts{display:flex;gap:10px;flex-wrap:wrap}
+.past-sec{padding:0 64px 72px}
+.past-heading{margin-bottom:32px;display:flex;align-items:flex-end;justify-content:space-between}
+.past-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;background:var(--lineG)}
+.past-c{background:var(--navy2);overflow:hidden;cursor:pointer;position:relative;transition:var(--tr)}
+.past-c.feat{grid-column:span 2;grid-row:span 2}
+.past-iw{position:relative;overflow:hidden;height:240px}
+.past-c.feat .past-iw{height:100%;min-height:380px}
+.past-iw img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.past-c:hover .past-iw img{transform:scale(1.07)}
+.past-ov{position:absolute;inset:0;background:linear-gradient(180deg,transparent 35%,rgba(7,17,30,.92) 100%);display:flex;flex-direction:column;justify-content:flex-end;padding:20px;opacity:0;transition:opacity .4s}
+.past-c:hover .past-ov{opacity:1}
+.past-ov-cat{font-family:var(--sans);font-size:8px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:5px}
+.past-ov-title{font-family:var(--serif);font-size:18px;font-style:italic;margin-bottom:3px}
+.past-ov-date{font-family:var(--sans);font-size:8px;letter-spacing:.18em;color:var(--ch3);text-transform:uppercase}
+/* Admin */
+.admin-panel{background:var(--navy3);border:1px solid rgba(201,168,76,.18);margin:0 64px 72px;padding:40px}
+.admin-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--line)}
+.admin-title{font-family:var(--serif);font-size:24px;font-style:italic}
+.admin-badge{background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;padding:4px 11px}
+.admin-fg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.upload-z{grid-column:1/-1;border:2px dashed rgba(201,168,76,.22);padding:34px;text-align:center;transition:var(--tr);cursor:pointer;position:relative}
+.upload-z:hover{border-color:var(--gold);background:rgba(201,168,76,.04)}
+.upload-z input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:30px;margin-bottom:10px}
+.upload-txt{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ch2);margin-bottom:5px}
+.upload-sub{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ch3)}
+.upload-prev{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:7px;margin-top:14px}
+.prev-thumb{aspect-ratio:1;position:relative;overflow:hidden}
+.prev-thumb img{width:100%;height:100%;object-fit:cover}
+.prev-rm{position:absolute;top:4px;right:4px;width:20px;height:20px;background:rgba(7,17,30,.85);color:var(--champagne);border:none;font-size:11px;display:flex;align-items:center;justify-content:center}
+.admin-ev-list{margin-top:30px}
+.admin-ev-row{display:grid;grid-template-columns:72px 1fr auto auto;gap:16px;align-items:center;padding:14px;border-bottom:1px solid var(--line);transition:var(--tr)}
+.admin-ev-row:hover{background:var(--smoke)}
+.admin-ev-thumb{width:72px;height:52px;overflow:hidden}
+.admin-ev-thumb img{width:100%;height:100%;object-fit:cover}
+.admin-ev-name{font-family:var(--serif);font-size:16px}
+.admin-ev-date{font-family:var(--sans);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--ch3);margin-top:3px}
+.ev-status{font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border:1px solid}
+.s-up{border-color:var(--gold);color:var(--gold)}
+.s-past{border-color:var(--ch3);color:var(--ch3)}
+.s-live{border-color:#9b1c2e;color:#9b1c2e;animation:lblink 1.8s infinite}
+.abtn{background:none;border:1px solid var(--line);color:var(--ch3);padding:5px 12px;font-family:var(--sans);font-size:8px;letter-spacing:.13em;text-transform:uppercase;transition:var(--tr)}
+.abtn:hover{border-color:var(--gold);color:var(--gold)}
+.abtn.del:hover{border-color:#9b1c2e;color:#9b1c2e}
+.a-btns{display:flex;gap:6px}
+
+/* ===== ABOUT PAGE ===== */
+.about-story{padding:96px 0}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:78px;align-items:start}
+.ab-text p{font-family:var(--serif);font-size:17px;color:var(--ch2);line-height:1.88;margin-bottom:18px;font-style:italic}
+.ab-text p strong{color:var(--champagne);font-style:normal}
+.ab-img-stack{position:relative}
+.ab-img-main{height:470px;overflow:hidden;cursor:zoom-in}
+.ab-img-main img{width:100%;height:100%;object-fit:cover;transition:transform .65s ease}
+.ab-img-main:hover img{transform:scale(1.05)}
+.ab-img-float{position:absolute;bottom:-24px;left:-24px;width:185px;height:185px;overflow:hidden;border:4px solid var(--navy)}
+.ab-img-float img{width:100%;height:100%;object-fit:cover}
+.vals{padding:72px 0;background:var(--navy2)}
+.vals-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--lineG);margin-top:48px}
+.val-c{background:var(--navy2);padding:38px 30px;transition:var(--tr)}
+.val-c:hover{background:rgba(201,168,76,.04)}
+.val-icon{font-size:28px;margin-bottom:16px}
+.val-name{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.val-desc{font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch2);line-height:1.65}
+.nearby{padding:72px 0}
+.nearby-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--lineG);margin-top:48px}
+.nb-c{background:var(--navy);padding:30px 22px;text-align:center;transition:var(--tr)}
+.nb-c:hover{background:rgba(201,168,76,.04)}
+.nb-icon{font-size:26px;margin-bottom:12px}
+.nb-name{font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.nb-dist{font-family:var(--serif);font-size:13px;font-style:italic;color:var(--ch2)}
+
+/* ===== CONTACT PAGE ===== */
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:78px}
+.ct-block{padding:24px;border:1px solid var(--line);margin-bottom:13px;position:relative;overflow:hidden;transition:var(--tr)}
+.ct-block:hover{border-color:rgba(201,168,76,.2)}
+.ct-block::before{content:'';position:absolute;top:0;left:0;width:2px;height:100%;background:linear-gradient(var(--gold),transparent)}
+.ctb-lbl{font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.38em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.ctb-val{font-family:var(--serif);font-size:15px;font-style:italic;color:var(--ch2);line-height:1.88}
+.ctb-val a{color:var(--champagne);transition:color .3s}
+.ctb-val a:hover{color:var(--gold)}
+.h-tbl{width:100%;border-collapse:collapse}
+.h-tbl tr{border-bottom:1px solid var(--line)}
+.h-tbl tr:last-child{border-bottom:none}
+.h-tbl td{font-family:var(--serif);font-size:14px;font-style:italic;padding:9px 0;color:var(--ch2)}
+.h-tbl td:first-child{font-style:normal;color:var(--champagne);font-weight:600}
+.h-tbl td:last-child{text-align:right}
+.wa-btn{display:flex;align-items:center;gap:12px;background:#25d366;color:#fff;padding:15px 20px;font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;transition:var(--tr);margin-top:7px;position:relative;overflow:hidden}
+.wa-btn::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.12);transform:translateX(-100%);transition:transform .3s}
+.wa-btn:hover::before{transform:translateX(0)}
+.wa-btn:hover{box-shadow:0 0 32px rgba(37,211,102,.4)}
+.soc-row{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--lineG);margin:68px 0}
+.soc-c{background:var(--navy2);padding:30px 18px;text-align:center;transition:var(--tr);display:block;color:var(--champagne)}
+.soc-c:hover{background:rgba(255,255,255,.02)}
+.soc-icon{font-size:30px;margin-bottom:12px}
+.soc-name{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-bottom:5px}
+.soc-handle{font-family:var(--sans);font-size:10px;letter-spacing:.1em;color:var(--ch3);margin-bottom:14px}
+.soc-follow{display:inline-block;border:1px solid;padding:6px 16px;font-family:var(--sans);font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;transition:var(--tr)}
+.soc-fb .soc-follow{border-color:#1877f2;color:#1877f2}.soc-fb:hover .soc-follow{background:#1877f2;color:#fff}
+.soc-ig .soc-follow{border-color:#e1306c;color:#e1306c}.soc-ig:hover .soc-follow{background:#e1306c;color:#fff}
+.soc-tk .soc-follow{border-color:#ff0050;color:#ff0050}.soc-tk:hover .soc-follow{background:#ff0050;color:#fff}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+  .rooms-grid-3,.dining-grid-3{grid-template-columns:1fr 1fr}
+  .exp-grid,.ev-promo-grid,.ab-grid,.ct-grid,.dd-grid{grid-template-columns:1fr;gap:44px}
+  .exp-img,.ab-img-main,.ev-img-main,.dd-img{height:360px}
+  .ab-img-float,.ev-img-float{display:none}
+  .footer-top{grid-template-columns:1fr 1fr;gap:32px}
+  .am-bar-grid{grid-template-columns:repeat(3,1fr)}
+  .nearby-grid{grid-template-columns:1fr 1fr}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .ev-card{grid-template-columns:1fr}
+  .ev-card-img{min-height:220px;max-height:260px}
+  .past-grid{grid-template-columns:1fr 1fr}
+  .past-c.feat{grid-column:span 1;grid-row:span 1}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,180px)}
+  .vals-grid{grid-template-columns:1fr 1fr}
+  .admin-panel{margin:0 22px 64px}
+}
+@media(max-width:768px){
+  #nav{padding:14px 20px}#nav.solid{padding:10px 20px}
+  .nav-links,.nav-book{display:none}
+  .nav-ham{display:flex}
+  .wrap{padding:0 20px}
+  .mosaic{grid-template-columns:1fr;grid-template-rows:240px}
+  .mc.sp-r{grid-row:span 1}.mc.sp-c{grid-column:span 1}
+  .rooms-grid-3,.dining-grid-3{grid-template-columns:1fr}
+  .rooms-all-grid{grid-template-columns:1fr}
+  .vals-grid,.soc-row{grid-template-columns:1fr}
+  .am-bar-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-row{grid-template-columns:1fr 1fr}
+  .ev-tabs,.ev-list,.past-sec{padding-left:20px;padding-right:20px}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,130px)}
+  .gc.wide{grid-column:span 1}
+  #footer{padding:48px 20px 32px}
+  .footer-top{grid-template-columns:1fr;gap:24px}
+  .h-ctas{flex-direction:column;align-items:center}
+  .rewards-stats{min-width:unset;width:100%}
+  #lb-prev{left:6px}#lb-next{right:6px}
+  .admin-fg{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div id="loader">
+  <div class="ld-deco">
+    <div class="ld-line l"></div>
+    <div class="ld-diamond"></div>
+    <div class="ld-line r"></div>
+  </div>
+  <div class="ld-logo">Ramada</div>
+  <div class="ld-sub">by Wyndham · Itahari Pashupati Marg</div>
+  <div class="ld-track"><div class="ld-fill" id="ldfill"></div></div>
+</div>
+
+<canvas id="bgc"></canvas>
+<div id="cr"></div><div id="cd"></div>
+
+<div id="pw-veil">
+  <div class="pvc"></div><div class="pvc"></div><div class="pvc"></div>
+  <div class="pvc"></div><div class="pvc"></div><div class="pvc"></div>
+</div>
+
+<nav id="nav">
+  <div class="nav-brand" onclick="go('home')">
+    <div class="nav-brand-name">Ramada</div>
+    <div class="nav-brand-sub">by Wyndham · Itahari</div>
+  </div>
+  <div class="nav-links">
+    <button class="nl active" id="nb-home" onclick="go('home')">Home</button>
+    <button class="nl" id="nb-rooms" onclick="go('rooms')">Rooms</button>
+    <button class="nl" id="nb-dining" onclick="go('dining')">Dining</button>
+    <button class="nl" id="nb-events" onclick="go('events')">Events</button>
+    <button class="nl" id="nb-about" onclick="go('about')">About</button>
+    <button class="nl" id="nb-contact" onclick="go('contact')">Contact</button>
+  </div>
+  <button class="nav-book" onclick="openModal()"><span>Book Now</span></button>
+  <button class="nav-ham" onclick="toggleMob()"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="mob">
+  <button class="mob-x" onclick="toggleMob()">&#x2715;</button>
+  <button class="mob-l" onclick="go('home');toggleMob()">Home</button>
+  <button class="mob-l" onclick="go('rooms');toggleMob()">Rooms</button>
+  <button class="mob-l" onclick="go('dining');toggleMob()">Dining</button>
+  <button class="mob-l" onclick="go('events');toggleMob()">Events</button>
+  <button class="mob-l" onclick="go('about');toggleMob()">About</button>
+  <button class="mob-l" onclick="go('contact');toggleMob()">Contact</button>
+  <button class="mob-l" style="color:var(--gold2)" onclick="openModal();toggleMob()">Book Now</button>
+</div>
+
+<div id="page-wrap">
+
+<!-- ==================== HOME ==================== -->
+<div class="page active" id="page-home">
+  <section id="hero">
+    <div class="hero-video">
+      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=80">
+        <source src="https://videos.pexels.com/video-files/3773486/3773486-uhd_2560_1440_25fps.mp4" type="video/mp4">
+      </video>
+      <img class="hero-bg-img" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1800&q=80" alt="Ramada Itahari">
+    </div>
+    <div class="hero-grad"></div>
+    <div class="hero-bot"></div>
+    <div class="hero-frame"></div>
+    <div class="h-content">
+      <div class="h-badge">Eastern Nepal&#39;s First International Hotel Chain</div>
+      <div class="h-name">Ramada</div>
+      <div class="h-by">by Wyndham &middot; Itahari Pashupati Marg</div>
+      <div class="h-rule"><div class="h-rule-line l"></div><div class="h-rule-dia"></div><div class="h-rule-line r"></div></div>
+      <p class="h-desc">81 Rooms &nbsp;&middot;&nbsp; All-Day Dining &nbsp;&middot;&nbsp; Outdoor Pool &nbsp;&middot;&nbsp; Spa &nbsp;&middot;&nbsp; Grand Banquet Halls</p>
+      <div class="h-loc">&#128205; Pashupati Marg, Itahari-4, Sunsari &nbsp;&middot;&nbsp; 21km from Biratnagar Airport</div>
+      <div class="h-ctas">
+        <button class="btn-primary" onclick="openModal()">&#127968; Reserve Your Room</button>
+        <button class="btn-outline" onclick="go('rooms')">Explore Rooms &#8594;</button>
+      </div>
+    </div>
+    <div class="h-scroll"><div class="hsl"></div><span>Discover</span></div>
+  </section>
+
+  <div class="am-bar">
+    <div class="am-bar-grid">
+      <div class="am-cell rv"><div class="am-icon">&#127946;</div><div class="am-label">Outdoor Pool</div></div>
+      <div class="am-cell rv"><div class="am-icon">&#128134;</div><div class="am-label">Health Club &amp; Spa</div></div>
+      <div class="am-cell rv"><div class="am-icon">&#127869;</div><div class="am-label">All-Day Dining</div></div>
+      <div class="am-cell rv"><div class="am-icon">&#128188;</div><div class="am-label">Business Centre</div></div>
+      <div class="am-cell rv"><div class="am-icon">&#127881;</div><div class="am-label">Grand Banquet Halls</div></div>
+      <div class="am-cell rv"><div class="am-icon">&#128663;</div><div class="am-label">Free Parking</div></div>
+    </div>
+  </div>
+
+  <div class="rooms-intro">
+    <div class="wrap">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px">
+        <div><div class="sec-label">Accommodation</div><h2 class="sec-title rv">81 rooms of <em>world-class comfort</em></h2></div>
+        <button class="btn-outline rv" onclick="go('rooms')">View All Rooms &#8594;</button>
+      </div>
+      <div class="rooms-grid-3">
+        <div class="room-card rv" onclick="go('rooms')">
+          <div class="rc-img"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=85" alt="Deluxe Single" loading="lazy"><div class="rc-ov"><div class="rc-ov-type">Most Popular</div><div class="rc-ov-name">Deluxe Single</div></div></div>
+          <div class="rc-body"><div class="rc-type">Deluxe &middot; Single</div><div class="rc-name">Deluxe Single</div><div class="rc-desc">57 rooms with king bed, flat-screen HDTV, minibar, in-room safe, and city views over Itahari.</div><div class="rc-tags"><span class="rc-tag">King Bed</span><span class="rc-tag">Free WiFi</span><span class="rc-tag">Minibar</span><span class="rc-tag">Satellite TV</span></div><div class="rc-foot"><div><div class="rc-rate">NPR 8,500</div><div class="rc-per">per night &middot; incl. taxes</div></div><button class="rc-btn" onclick="openModal();event.stopPropagation()">Book</button></div></div>
+        </div>
+        <div class="room-card rv" style="transition-delay:.1s" onclick="go('rooms')">
+          <div class="rc-img"><img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=85" alt="Deluxe Double" loading="lazy"><div class="rc-ov"><div class="rc-ov-type">For Couples</div><div class="rc-ov-name">Deluxe Double</div></div></div>
+          <div class="rc-body"><div class="rc-type">Deluxe &middot; Double</div><div class="rc-name">Deluxe Double</div><div class="rc-desc">14 spacious rooms with twin beds, bathrobe, slippers, premium bath products and panoramic windows.</div><div class="rc-tags"><span class="rc-tag">Twin Beds</span><span class="rc-tag">Bathrobe</span><span class="rc-tag">Hair Dryer</span><span class="rc-tag">Safe</span></div><div class="rc-foot"><div><div class="rc-rate">NPR 11,000</div><div class="rc-per">per night &middot; incl. taxes</div></div><button class="rc-btn" onclick="openModal();event.stopPropagation()">Book</button></div></div>
+        </div>
+        <div class="room-card rv" style="transition-delay:.2s" onclick="go('rooms')">
+          <div class="rc-img"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=85" alt="Junior Suite" loading="lazy"><div class="rc-ov"><div class="rc-ov-type">Best Value</div><div class="rc-ov-name">Junior Suite</div></div></div>
+          <div class="rc-body"><div class="rc-type">Suite &middot; Junior</div><div class="rc-name">Junior Suite</div><div class="rc-desc">6 junior suites with separate sitting area, plush king bed, premium amenities, and complimentary minibar.</div><div class="rc-tags"><span class="rc-tag">Sitting Area</span><span class="rc-tag">King Bed</span><span class="rc-tag">Minibar</span><span class="rc-tag">Bathtub</span></div><div class="rc-foot"><div><div class="rc-rate">NPR 18,500</div><div class="rc-per">per night &middot; incl. taxes</div></div><button class="rc-btn" onclick="openModal();event.stopPropagation()">Book</button></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mosaic">
+    <div class="mc sp-r" onclick="openLB(0,homeImgs)"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85" alt="Lobby" loading="lazy"><div class="mc-ov"><div class="mc-name">The Grand Lobby</div><div class="mc-sub">First Impressions</div></div><div class="mc-zoom">View</div></div>
+    <div class="mc" onclick="openLB(1,homeImgs)"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=85" alt="Spa" loading="lazy"><div class="mc-ov"><div class="mc-name">Health Club &amp; Spa</div></div><div class="mc-zoom">View</div></div>
+    <div class="mc" onclick="openLB(2,homeImgs)"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=85" alt="Dining" loading="lazy"><div class="mc-ov"><div class="mc-name">All-Day Dining</div></div><div class="mc-zoom">View</div></div>
+    <div class="mc" onclick="openLB(3,homeImgs)"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=85" alt="Pool" loading="lazy"><div class="mc-ov"><div class="mc-name">Outdoor Pool</div></div><div class="mc-zoom">View</div></div>
+    <div class="mc sp-c" onclick="openLB(4,homeImgs)"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&q=85" alt="Banquet" loading="lazy"><div class="mc-ov"><div class="mc-name">Grand Banquet Hall</div><div class="mc-sub">Up to 300 Guests</div></div><div class="mc-zoom">View</div></div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-c rv"><div class="stat-num" data-count="81" data-suffix="">0</div><div class="stat-lbl">Luxury Rooms</div></div>
+    <div class="stat-c rv"><div class="stat-num" data-count="300" data-suffix="+">0</div><div class="stat-lbl">Event Capacity</div></div>
+    <div class="stat-c rv"><div class="stat-num" data-count="24" data-suffix="/7">0</div><div class="stat-lbl">Room Service</div></div>
+    <div class="stat-c rv"><div class="stat-num" data-count="9100" data-suffix="+">0</div><div class="stat-lbl">Wyndham Hotels Worldwide</div></div>
+  </div>
+
+  <div class="exp-sec">
+    <div class="wrap">
+      <div class="exp-grid">
+        <div class="exp-img rv-l" onclick="openLB(5,homeImgs)">
+          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=85" alt="Pool" loading="lazy">
+          <div class="exp-frame"></div>
+          <div class="exp-badge">Established 2024 &middot; Itahari</div>
+        </div>
+        <div class="rv-r">
+          <div class="sec-label">Experiences</div>
+          <h2 class="sec-title" style="font-size:clamp(30px,4vw,60px)">A gateway to <em>Eastern Nepal</em></h2>
+          <p class="sec-body" style="margin:16px 0 26px">The first American hotel brand beyond Kathmandu, Ramada by Wyndham Itahari brings the trusted Wyndham standard to Sunsari District &mdash; making Eastern Nepal a world-class destination.</p>
+          <div class="exp-list">
+            <div class="exp-item"><div class="exp-icon">&#127946;</div><div><div class="exp-name">Outdoor Pool &amp; Kids Pool</div><div class="exp-desc">Tropical outdoor swimming pool with a dedicated children&#39;s area and poolside bar service.</div></div></div>
+            <div class="exp-item"><div class="exp-icon">&#128134;</div><div><div class="exp-name">Health Club &amp; Spa</div><div class="exp-desc">State-of-the-art gym, steam room, sauna, and full-service spa with traditional Nepali treatments.</div></div></div>
+            <div class="exp-item"><div class="exp-icon">&#127978;</div><div><div class="exp-name">Sky Terrace Bar</div><div class="exp-desc">Rooftop bar with panoramic views &mdash; craft cocktails, wines, and sunset appetizers.</div></div></div>
+            <div class="exp-item"><div class="exp-icon">&#127807;</div><div><div class="exp-name">Outdoor Lawn &amp; Garden</div><div class="exp-desc">Landscaped garden &mdash; perfect for outdoor weddings, receptions, and corporate events.</div></div></div>
+          </div>
+          <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap">
+            <button class="btn-primary" onclick="go('about')">Discover More</button>
+            <button class="btn-ghost" onclick="go('events')">Upcoming Events &#8594;</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vid-sec">
+    <video autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/2795405/2795405-uhd_2560_1440_25fps.mp4" type="video/mp4">
+    </video>
+    <img class="vid-sec-fb" src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600&q=80" alt="Events">
+    <div class="vid-ov"></div>
+    <div class="vid-content">
+      <div class="sec-label" style="justify-content:center">Weddings &amp; Events</div>
+      <h2 class="sec-title rv" style="text-align:center;font-size:clamp(28px,4.5vw,62px)">Your most <em>precious moments</em><br>deserve a world-class setting</h2>
+      <p class="sec-body rv" style="text-align:center;margin:16px auto 32px">Two grand banquet halls, outdoor lawn, meeting rooms &mdash; Ramada Itahari hosts up to 300 guests for weddings, corporate events, and private celebrations.</p>
+      <button class="btn-primary rv" onclick="go('events')">Plan Your Event</button>
+    </div>
+  </div>
+
+  <div class="dining-sec">
+    <div class="wrap">
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:18px">
+        <div><div class="sec-label">Culinary Destinations</div><h2 class="sec-title rv">Three venues, <em>infinite flavours</em></h2></div>
+        <button class="btn-outline rv" onclick="go('dining')">Full Dining &#8594;</button>
+      </div>
+      <div class="dining-grid-3">
+        <div class="dc rv" onclick="go('dining')"><div class="dc-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=85" alt="Restaurant" loading="lazy"><div class="dc-tag">Open Daily</div></div><div class="dc-body"><div class="dc-name">Grand Central Restaurant</div><div class="dc-desc">All-day dining with Nepali, Indian &amp; international cuisine. Buffet breakfast, &agrave; la carte lunch &amp; dinner.</div><div class="dc-hours">&#128197; 6:30 AM &ndash; 11:00 PM &middot; Room service 24/7</div></div></div>
+        <div class="dc rv" style="transition-delay:.1s" onclick="go('dining')"><div class="dc-img"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=700&q=85" alt="Lobby Lounge" loading="lazy"><div class="dc-tag">Signature</div></div><div class="dc-body"><div class="dc-name">Lobby Lounge &amp; Deli</div><div class="dc-desc">Artisan coffee, fresh-baked pastries, charcuterie boards, and crafted cocktails in our elegant lounge.</div><div class="dc-hours">&#128197; 8:00 AM &ndash; 10:00 PM Daily</div></div></div>
+        <div class="dc rv" style="transition-delay:.2s" onclick="go('dining')"><div class="dc-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=85" alt="Terrace Bar" loading="lazy"><div class="dc-tag">Rooftop</div></div><div class="dc-body"><div class="dc-name">Sky Terrace Bar</div><div class="dc-desc">Craft cocktails, premium spirits, fine wines and light tapas under the Itahari sky. Happy hour 5&ndash;8PM.</div><div class="dc-hours">&#128197; 5:00 PM &ndash; 1:00 AM &middot; Happy Hour 5&ndash;8PM</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="rewards">
+    <div class="wrap">
+      <div class="rewards-inner">
+        <div style="max-width:520px">
+          <div class="sec-label">Loyalty Programme</div>
+          <h2 class="sec-title" style="font-size:clamp(24px,3.5vw,50px)">Join <em>Wyndham Rewards</em></h2>
+          <p class="sec-body" style="margin:14px 0 24px">The world&#39;s most generous hotel rewards programme &mdash; earn points at 9,100+ hotels in 95+ countries and redeem for free nights anywhere.</p>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <a href="https://www.wyndhamhotels.com/wyndham-rewards" target="_blank" class="btn-primary">Join Free Today</a>
+            <button class="btn-ghost" onclick="openModal()">Book &amp; Earn Points &#8594;</button>
+          </div>
+        </div>
+        <div class="rewards-stats">
+          <div class="rstat"><div class="rstat-n">9,100<span style="font-size:18px">+</span></div><div class="rstat-l">Hotels Worldwide</div></div>
+          <div class="rstat"><div class="rstat-n">95<span style="font-size:18px">+</span></div><div class="rstat-l">Countries</div></div>
+          <div class="rstat"><div class="rstat-n">24</div><div class="rstat-l">Hotel Brands</div></div>
+          <div class="rstat"><div class="rstat-n">1990</div><div class="rstat-l">Trusted Since</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gallery-grid">
+    <div class="gc wide" onclick="openLB(0,galleryImgs)"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1000&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(1,galleryImgs)"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(2,galleryImgs)"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(3,galleryImgs)"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(4,galleryImgs)"><img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(5,galleryImgs)"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc wide" onclick="openLB(6,galleryImgs)"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1000&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+    <div class="gc" onclick="openLB(7,galleryImgs)"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=600&q=85" alt="" loading="lazy"><div class="gc-ov">&#128269;</div></div>
+  </div>
+
+  <footer id="footer">
+    <div class="footer-top">
+      <div><div class="f-logo">Ramada</div><div class="f-sub">by Wyndham &middot; Itahari Pashupati Marg</div><div class="f-desc">Eastern Nepal&#39;s first international hotel chain &mdash; bringing world-class hospitality and the trusted Wyndham standard to Sunsari District.</div><div class="f-addr">Pashupati Marg, Itahari-4<br>Sunsari District, Koshi Province, Nepal</div></div>
+      <div><div class="fcol-title">Navigate</div><ul class="f-links"><li><button onclick="go('home')">Home</button></li><li><button onclick="go('rooms')">Rooms &amp; Suites</button></li><li><button onclick="go('dining')">Dining</button></li><li><button onclick="go('events')">Events</button></li><li><button onclick="go('about')">About Us</button></li><li><button onclick="go('contact')">Contact</button></li></ul></div>
+      <div><div class="fcol-title">Amenities</div><ul class="f-links"><li><a>Outdoor Pool</a></li><li><a>Health Club &amp; Spa</a></li><li><a>Business Centre</a></li><li><a>Sky Terrace Bar</a></li><li><a>Banquet Halls</a></li><li><a>Airport Shuttle</a></li></ul></div>
+      <div><div class="fcol-title">Contact</div><div class="fc-row">&#128222; <span><a href="tel:+977">+977 (Itahari)</a><br><small style="opacity:.5;font-size:11px">24/7 Front Desk</small></span></div><div class="fc-row">&#128231; <span><a href="mailto:itahari@ramada.com">itahari@ramada.com</a></span></div><div class="fc-row">&#128336; <span>Check-in: 2PM &middot; Check-out: 12PM</span></div><div class="fc-row">&#128205; <span>Pashupati Marg, Itahari-4</span></div><div class="fc-row">&#9992;&#65039; <span>21km from Biratnagar Airport</span></div></div>
+    </div>
+    <hr class="footer-div">
+    <div class="footer-btm">
+      <div class="footer-copy">&copy; 2025 Grand Central Hotel Pvt. Ltd. &mdash; Ramada by Wyndham Itahari &middot; Part of AB Holding &middot; All Rights Reserved</div>
+      <div class="footer-soc"><a class="footer-si" href="#" title="Facebook">&#128216;</a><a class="footer-si" href="#" title="Instagram">&#128247;</a><a class="footer-si" href="#" title="TikTok">&#127925;</a><a class="footer-si" href="https://wa.me/977" title="WhatsApp">&#128172;</a></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== ROOMS ==================== -->
+<div class="page" id="page-rooms">
+  <div class="page-hero">
+    <div class="ph-bg"><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1600&q=85" alt="Rooms"></div>
+    <div class="wrap" style="position:relative;z-index:1;width:100%">
+      <div class="sec-label">Accommodation</div>
+      <h1 class="sec-title" style="font-size:clamp(40px,6vw,88px)">Rooms &amp; <em>Suites</em></h1>
+      <p style="font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ch2);margin-top:12px;max-width:500px">81 carefully curated rooms &mdash; world-class comfort, Nepali warmth.</p>
+    </div>
+  </div>
+  <div style="padding:56px 64px 8px"><div class="sec-label">All Room Types</div><h2 class="sec-title rv" style="font-size:clamp(26px,3.5vw,50px)">Find your perfect <em>stay</em></h2></div>
+  <div style="padding:28px 64px 80px"><div class="rooms-all-grid" id="roomsGrid"></div></div>
+  <footer id="footer2" style="background:var(--navy2);border-top:1px solid var(--line);padding:60px 64px 36px">
+    <div class="footer-btm" style="justify-content:center;flex-direction:column;text-align:center;gap:18px">
+      <div class="f-logo">Ramada</div>
+      <div class="footer-copy">&copy; 2025 Grand Central Hotel Pvt. Ltd. &mdash; Ramada by Wyndham Itahari</div>
+      <div class="footer-soc" style="justify-content:center"><a class="footer-si" href="#">&#128216;</a><a class="footer-si" href="#">&#128247;</a><a class="footer-si" href="#">&#127925;</a></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ==================== DINING ==================== -->
+<div class="page" id="page-dining">
+  <div class="page-hero">
+    <div class="ph-bg"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1600&q=85" alt="Dining" style="filter:brightness(.26) saturate(1.2)"></div>
+    <div class="wrap" style="position:relative;z-index:1;width:100%">
+      <div class="sec-label">Food &amp; Beverage</div>
+      <h1 class="sec-title" style="font-size:clamp(40px,6vw,88px)">Dining with <em>distinction</em></h1>
+    </div>
+  </div>
+  <div style="padding:80px 0;background:var(--navy2)">
+    <div class="wrap">
+      <div class="dd-grid">
+        <div class="rv-l"><div class="dd-img" onclick="openLB(0,diningImgs)" style="cursor:zoom-in"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85" alt="Grand Central Restaurant" loading="lazy"></div></div>
+        <div class="rv-r">
+          <div class="sec-label">Signature Restaurant</div>
+          <h2 class="sec-title" style="font-size:clamp(26px,3.5vw,52px)">Grand Central <em>Restaurant</em></h2>
+          <div style="display:flex;align-items:center;gap:14px;margin:24px 0"><div style="flex:1;height:1px;background:rgba(201,168,76,.22)"></div><div style="width:8px;height:8px;border:1px solid var(--gold);transform:rotate(45deg);flex-shrink:0"></div><div style="flex:1;height:1px;background:rgba(201,168,76,.22)"></div></div>
+          <div class="dd-text">
+            <p>Our all-day dining destination brings together the finest flavours of Nepal, India, and the world. <strong>Breakfast buffets, &agrave; la carte lunch and dinner</strong>, and 24-hour room service ensure you&#39;re never far from exceptional cuisine.</p>
+            <p>Helmed by award-winning chefs, every dish is crafted with locally-sourced ingredients. From Dal Bhat to Continental, authentic flavours in every plate.</p>
+            <p><strong>Halal-certified kitchen.</strong> Dietary accommodations: vegan, vegetarian, gluten-free, and Jain requirements available.</p>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:22px"><button class="btn-primary" onclick="openModal()">Reserve a Table</button><a href="https://wa.me/977" target="_blank" class="btn-outline">WhatsApp Catering</a></div>
+        </div>
+      </div>
+      <div style="margin-top:68px"><div class="sec-label">From the Kitchen</div><h2 class="sec-title rv" style="font-size:clamp(24px,3.2vw,48px)">Signature <em>dishes</em></h2><div class="mh-grid" id="menuHighlightGrid"></div></div>
+    </div>
+  </div>
+  <div style="padding:80px 0;background:var(--navy)">
+    <div class="wrap">
+      <div class="sec-label">All Dining Outlets</div>
+      <h2 class="sec-title rv" style="font-size:clamp(24px,3.2vw,46px)">Three <em>destinations</em></h2>
+      <div class="dining-grid-3" style="margin-top:44px">
+        <div class="dc rv"><div class="dc-img"><img src="https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=700&q=85" alt="Lobby Lounge" loading="lazy"><div class="dc-tag">All Day</div></div><div class="dc-body"><div class="dc-name">Lobby Lounge &amp; Deli</div><div class="dc-desc">Artisan coffee, afternoon teas, freshly baked pastries, charcuterie, light bites &mdash; the social heart of the hotel.</div><div class="dc-hours">&#128197; 8:00 AM &ndash; 10:00 PM</div></div></div>
+        <div class="dc rv" style="transition-delay:.1s"><div class="dc-img"><img src="https://images.unsplash.com/photo-1544025162-d76694265947?w=700&q=85" alt="Terrace Bar" loading="lazy"><div class="dc-tag">Rooftop</div></div><div class="dc-body"><div class="dc-name">Sky Terrace Bar</div><div class="dc-desc">Rooftop bar with city views, premium cocktails, draught beers, fine wines, and tapas. Perfect for sunsets.</div><div class="dc-hours">&#128197; 5:00 PM &ndash; 1:00 AM &middot; Happy Hour 5&ndash;8PM</div></div></div>
+        <div class="dc rv" style="transition-delay:.2s"><div class="dc-img"><img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=700&q=85" alt="Pool Bar" loading="lazy"><div class="dc-tag">Poolside</div></div><div class="dc-body"><div class="dc-name">Pool Bar</div><div class="dc-desc">Refreshing cocktails, mocktails, light snacks, and cold plates served at the edge of our outdoor swimming pool.</div><div class="dc-hours">&#128197; 10:00 AM &ndash; 8:00 PM (Seasonal)</div></div></div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer3" style="background:var(--navy2);border-top:1px solid var(--line);padding:60px 64px 36px"><div class="footer-btm" style="justify-content:center;flex-direction:column;text-align:center;gap:18px"><div class="f-logo">Ramada</div><div class="footer-copy">&copy; 2025 Grand Central Hotel &mdash; Ramada by Wyndham Itahari</div><div class="footer-soc" style="justify-content:center"><a class="footer-si" href="#">&#128216;</a><a class="footer-si" href="#">&#128247;</a></div></div></footer>
+</div>
+
+<!-- ==================== EVENTS ==================== -->
+<div class="page" id="page-events">
+  <div class="page-hero ev-hero-bg">
+    <div class="ph-bg" style="position:absolute;inset:0;overflow:hidden">
+      <video autoplay muted loop playsinline style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22)"><source src="https://videos.pexels.com/video-files/2795405/2795405-uhd_2560_1440_25fps.mp4" type="video/mp4"></video>
+      <img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1600&q=85" alt="Events" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.22)">
+      <div style="position:absolute;bottom:0;left:0;right:0;height:55%;background:linear-gradient(transparent,var(--navy))"></div>
+    </div>
+    <div class="wrap" style="position:relative;z-index:1;width:100%">
+      <div class="sec-label">Events &amp; Celebrations</div>
+      <h1 class="sec-title" style="font-size:clamp(40px,6vw,88px)">Every <em>occasion</em>,<br>perfected</h1>
+      <p style="font-family:var(--serif);font-size:18px;font-style:italic;color:var(--ch2);margin-top:12px;max-width:500px">Weddings, corporate events, private celebrations &mdash; for up to 300 guests.</p>
+    </div>
+  </div>
+
+  <div style="padding:68px 0;background:var(--navy2)">
+    <div class="wrap">
+      <div class="sec-label">Venue Capacities</div>
+      <h2 class="sec-title rv" style="font-size:clamp(24px,3.2vw,48px)">Four <em>exceptional</em> spaces</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--lineG);margin-top:44px">
+        <div class="rstat rv"><div class="rstat-n">300</div><div class="rstat-l">Grand Banquet Hall A<br>Theatre / Banquet</div></div>
+        <div class="rstat rv"><div class="rstat-n">150</div><div class="rstat-l">Banquet Hall B<br>Cocktail / Seated</div></div>
+        <div class="rstat rv"><div class="rstat-n">80</div><div class="rstat-l">Meeting Rooms &times;2<br>Board / Conference</div></div>
+        <div class="rstat rv"><div class="rstat-n">200+</div><div class="rstat-l">Outdoor Lawn<br>Garden Events</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ev-promo">
+    <div class="wrap">
+      <div class="ev-promo-grid">
+        <div class="ev-img-col rv-l">
+          <div class="ev-img-main"><img src="https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&q=85" alt="Wedding" loading="lazy"></div>
+          <div class="ev-img-float"><img src="https://images.unsplash.com/photo-1510076857177-7470076d4098?w=300&q=85" alt="Wedding details" loading="lazy"></div>
+        </div>
+        <div class="rv-r">
+          <div class="sec-label">Weddings</div>
+          <h2 class="sec-title" style="font-size:clamp(26px,3.5vw,54px)">Your dream <em>wedding</em><br>in Eastern Nepal</h2>
+          <p class="sec-body" style="margin:16px 0 24px">Ramada by Wyndham Itahari is Eastern Nepal&#39;s premier wedding destination. Our dedicated wedding specialists handle every detail.</p>
+          <div class="exp-list">
+            <div class="exp-item"><div class="exp-icon">&#128146;</div><div><div class="exp-name" style="font-size:10px">Dedicated Wedding Planner</div><div class="exp-desc">One point of contact for your entire celebration, from enquiry to final bow.</div></div></div>
+            <div class="exp-item"><div class="exp-icon">&#127869;</div><div><div class="exp-name" style="font-size:10px">Custom Catering Menus</div><div class="exp-desc">Bespoke menus &mdash; Nepali, Indian, Continental, live stations &amp; dessert buffets.</div></div></div>
+            <div class="exp-item"><div class="exp-icon">&#127807;</div><div><div class="exp-name" style="font-size:10px">Garden &amp; Outdoor Lawn</div><div class="exp-desc">Beautifully lit outdoor lawn for haldi, mehendi, and reception under Himalayan stars.</div></div></div>
+          </div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px"><button class="btn-primary" onclick="openModal()">Enquire About Weddings</button><button class="btn-ghost" onclick="go('contact')">Contact Events Team &#8594;</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ev-tabs">
+    <button class="evtab active" data-evf="all">All Events</button>
+    <button class="evtab" data-evf="upcoming">Upcoming</button>
+    <button class="evtab" data-evf="past">Past</button>
+    <button class="evtab" data-evf="wedding">Weddings</button>
+    <button class="evtab" data-evf="corporate">Corporate</button>
+    <button class="evtab" data-evf="social">Social</button>
+  </div>
+
+  <div class="ev-list" id="upcomingCont">
+    <div style="padding-bottom:22px;padding-top:12px"><div class="sec-label">Upcoming</div><h2 class="sec-title" style="font-size:clamp(22px,3vw,44px)">Upcoming <em>events</em></h2></div>
+    <div id="upcomingList"></div>
+  </div>
+
+  <div class="past-sec" id="pastSec">
+    <div class="past-heading">
+      <div><div class="sec-label">Archive</div><h2 class="sec-title" style="font-size:clamp(22px,3vw,44px)">Past <em>highlights</em></h2></div>
+      <p style="font-family:var(--serif);font-size:14px;font-style:italic;color:var(--ch3);max-width:240px;text-align:right">Moments that defined Ramada Itahari.</p>
+    </div>
+    <div class="past-grid" id="pastList"></div>
+  </div>
+
+  <div class="admin-panel">
+    <div class="admin-hd"><div class="admin-title">Event Management Panel</div><span class="admin-badge">Admin</span></div>
+    <form id="adminForm" onsubmit="submitEv(event)">
+      <div class="admin-fg">
+        <div class="fg"><label class="fl">Event Name *</label><input type="text" class="fi" id="evName" placeholder="e.g. Grand Wedding Reception" required></div>
+        <div class="fg"><label class="fl">Category</label><select class="fi" id="evCat"><option value="wedding">Wedding</option><option value="corporate">Corporate</option><option value="social">Social Event</option><option value="conference">Conference</option><option value="special">Special Event</option></select></div>
+        <div class="fg"><label class="fl">Date *</label><input type="date" class="fi" id="evDate" required></div>
+        <div class="fg"><label class="fl">Time</label><input type="text" class="fi" id="evTime" placeholder="e.g. 6:00 PM"></div>
+        <div class="fg" style="grid-column:1/-1"><label class="fl">Description</label><textarea class="fi" id="evDesc" rows="3" placeholder="Describe the event..."></textarea></div>
+        <div class="fg"><label class="fl">Price / Entry</label><input type="text" class="fi" id="evPrice" placeholder="e.g. NPR 2,500 / Invitation Only"></div>
+        <div class="fg"><label class="fl">Status</label><select class="fi" id="evStatus"><option value="upcoming">Upcoming</option><option value="live">Live Now</option><option value="past">Past</option></select></div>
+        <div class="fg" style="grid-column:1/-1">
+          <div class="upload-z" id="uploadZone">
+            <input type="file" accept="image/*" onchange="handleUpload(event)" id="imgInput">
+            <div class="upload-icon">&#128444;&#65039;</div>
+            <div class="upload-txt">Drop image here or click to upload</div>
+            <div class="upload-sub">PNG, JPG, WEBP &middot; Max 5MB</div>
+            <div class="upload-prev" id="uploadPrev"></div>
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="fs">Add Event to Calendar</button>
+    </form>
+    <div class="admin-ev-list" id="adminEvList"></div>
+  </div>
+
+  <footer id="footer4" style="background:var(--navy2);border-top:1px solid var(--line);padding:60px 64px 36px"><div class="footer-btm" style="justify-content:center;flex-direction:column;text-align:center;gap:18px"><div class="f-logo">Ramada</div><div class="footer-copy">&copy; 2025 Grand Central Hotel &mdash; Ramada by Wyndham Itahari</div></div></footer>
+</div>
+
+<!-- ==================== ABOUT ==================== -->
+<div class="page" id="page-about">
+  <div class="page-hero">
+    <div class="ph-bg"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=85" alt="About"></div>
+    <div class="wrap" style="position:relative;z-index:1;width:100%">
+      <div class="sec-label">Our Story</div>
+      <h1 class="sec-title" style="font-size:clamp(40px,6vw,88px)">A landmark <em>born</em><br>in Eastern Nepal</h1>
+    </div>
+  </div>
+
+  <div class="about-story">
+    <div class="wrap">
+      <div class="ab-grid">
+        <div class="rv-l">
+          <div class="sec-label">Background</div>
+          <h2 class="sec-title" style="font-size:clamp(28px,3.5vw,54px)">The first <em>international</em><br>hotel in Sunsari</h2>
+          <div style="display:flex;align-items:center;gap:14px;margin:22px 0"><div style="flex:1;height:1px;background:rgba(201,168,76,.22)"></div><div style="width:8px;height:8px;border:1px solid var(--gold);transform:rotate(45deg);flex-shrink:0"></div><div style="flex:1;height:1px;background:rgba(201,168,76,.22)"></div></div>
+          <div class="ab-text">
+            <p>Ramada by Wyndham Itahari is a landmark hospitality achievement &mdash; <strong>the first international hotel chain to establish a presence in Eastern Nepal</strong>, beyond Kathmandu. Located at Pashupati Marg, Itahari-4, Sunsari District, the property opened its doors under the AB Holding group.</p>
+            <p>The hotel is managed under the <strong>Wyndham Hotels &amp; Resorts</strong> franchise &mdash; a global hospitality company operating in 95+ countries with 9,100+ hotels under 24 distinct brands. Ramada is one of Wyndham&#39;s most storied upper-midscale brands.</p>
+            <p>Strategically located in Itahari &mdash; a rapidly growing commercial and transit hub connecting Kathmandu with the Terai and the Indian border &mdash; the hotel serves business travellers, wedding parties, corporate events, and leisure guests from across the Koshi Province.</p>
+            <p>With <strong>81 rooms</strong>, multiple dining outlets, an outdoor pool, health club, spa, and grand banquet halls with capacity for 300 guests, Ramada by Wyndham Itahari represents a transformative moment for hospitality in Eastern Nepal.</p>
+          </div>
+        </div>
+        <div class="rv-r">
+          <div class="ab-img-stack">
+            <div class="ab-img-main" onclick="openLB(0,aboutImgs)"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=900&q=85" alt="Hotel Exterior" loading="lazy"></div>
+            <div class="ab-img-float"><img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=300&q=85" alt="Room detail" loading="lazy"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="vals">
+    <div class="wrap">
+      <div class="sec-label">Our Values</div>
+      <h2 class="sec-title rv" style="font-size:clamp(26px,3.2vw,50px)">What we <em>stand for</em></h2>
+      <div class="vals-grid">
+        <div class="val-c rv"><div class="val-icon">&#127758;</div><div class="val-name">World Standards</div><div class="val-desc">Every room, every meal, every interaction meets the Wyndham global standard of quality and service.</div></div>
+        <div class="val-c rv" style="transition-delay:.08s"><div class="val-icon">&#127989;</div><div class="val-name">Local Pride</div><div class="val-desc">Proudly Nepali at heart &mdash; local staff, local ingredients, local culture celebrated in every corner of the hotel.</div></div>
+        <div class="val-c rv" style="transition-delay:.16s"><div class="val-icon">&#128170;</div><div class="val-name">Genuine Hospitality</div><div class="val-desc">Warm Nepali hospitality meets international service training &mdash; every guest feels welcome and cared for.</div></div>
+        <div class="val-c rv" style="transition-delay:.24s"><div class="val-icon">&#127807;</div><div class="val-name">Sustainability</div><div class="val-desc">Energy-efficient systems, responsible sourcing, and a commitment to reducing our environmental footprint.</div></div>
+        <div class="val-c rv" style="transition-delay:.32s"><div class="val-icon">&#128188;</div><div class="val-name">Business Excellence</div><div class="val-desc">State-of-the-art business facilities, reliable high-speed WiFi, and professional event services for corporate guests.</div></div>
+        <div class="val-c rv" style="transition-delay:.4s"><div class="val-icon">&#128276;</div><div class="val-name">Community</div><div class="val-desc">Creating employment, supporting local suppliers, and contributing to the economic growth of the Koshi region.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="nearby">
+    <div class="wrap">
+      <div class="sec-label">Location</div>
+      <h2 class="sec-title rv" style="font-size:clamp(26px,3.2vw,50px)">Nearby <em>destinations</em></h2>
+      <div class="nearby-grid">
+        <div class="nb-c rv"><div class="nb-icon">&#9992;&#65039;</div><div class="nb-name">Biratnagar Airport</div><div class="nb-dist">21 km &middot; ~30 min drive</div></div>
+        <div class="nb-c rv"><div class="nb-icon">&#127795;</div><div class="nb-name">Koshi Tappu Wildlife Reserve</div><div class="nb-dist">~45 km from Itahari</div></div>
+        <div class="nb-c rv"><div class="nb-icon">&#127963;</div><div class="nb-name">Dharan (B.P. Koirala Hospital)</div><div class="nb-dist">18 km &middot; ~25 min drive</div></div>
+        <div class="nb-c rv"><div class="nb-icon">&#128652;</div><div class="nb-name">Biratnagar City</div><div class="nb-dist">22 km &middot; ~35 min drive</div></div>
+      </div>
+    </div>
+  </div>
+  <footer id="footer5" style="background:var(--navy2);border-top:1px solid var(--line);padding:60px 64px 36px"><div class="footer-btm" style="justify-content:center;flex-direction:column;text-align:center;gap:18px"><div class="f-logo">Ramada</div><div class="footer-copy">&copy; 2025 Grand Central Hotel &mdash; Ramada by Wyndham Itahari</div></div></footer>
+</div>
+
+<!-- ==================== CONTACT ==================== -->
+<div class="page" id="page-contact">
+  <div class="page-hero">
+    <div class="ph-bg"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&q=85" alt="Contact" style="filter:brightness(.22)"></div>
+    <div class="wrap" style="position:relative;z-index:1;width:100%">
+      <div class="sec-label">Get in Touch</div>
+      <h1 class="sec-title" style="font-size:clamp(40px,6vw,88px)">Find us, <em>reach us</em></h1>
+    </div>
+  </div>
+
+  <div style="padding:76px 0">
+    <div class="wrap">
+      <div class="ct-grid">
+        <div>
+          <div class="ct-block"><div class="ctb-lbl">Location</div><div class="ctb-val">Pashupati Marg, Itahari-4<br>Sunsari District, Koshi Province<br>Nepal &nbsp;&middot;&nbsp; <a href="https://maps.google.com/?q=Itahari+Sunsari" target="_blank">View on Google Maps &#8599;</a></div></div>
+          <div class="ct-block"><div class="ctb-lbl">Opening Hours</div>
+            <table class="h-tbl">
+              <tr><td>Front Desk</td><td>Open 24 Hours, 7 Days</td></tr>
+              <tr><td>Grand Central Restaurant</td><td>6:30 AM &ndash; 11:00 PM</td></tr>
+              <tr><td>Lobby Lounge &amp; Deli</td><td>8:00 AM &ndash; 10:00 PM</td></tr>
+              <tr><td>Sky Terrace Bar</td><td>5:00 PM &ndash; 1:00 AM</td></tr>
+              <tr><td>Health Club &amp; Spa</td><td>6:00 AM &ndash; 10:00 PM</td></tr>
+              <tr><td>Outdoor Pool</td><td>7:00 AM &ndash; 8:00 PM</td></tr>
+            </table>
+          </div>
+          <div class="ct-block">
+            <div class="ctb-lbl">Contact</div>
+            <div class="ctb-val"><a href="tel:+977">+977 (Itahari Front Desk)</a><br><a href="mailto:itahari@ramada.com">itahari@ramada.com</a></div>
+            <a href="https://wa.me/977?text=Hi%2C%20I%27d%20like%20to%20make%20a%20reservation%20at%20Ramada%20Itahari." target="_blank" class="wa-btn">&#128172;&nbsp; Chat on WhatsApp</a>
+          </div>
+          <div class="ct-block"><div class="ctb-lbl">Check-in / Check-out</div><div class="ctb-val">Check-in: 2:00 PM &nbsp;&middot;&nbsp; Check-out: 12:00 PM<br>Early check-in &amp; late check-out on request</div></div>
+        </div>
+        <div>
+          <div class="sec-label">Reservations</div>
+          <h2 class="sec-title" style="font-size:clamp(26px,3.2vw,48px)">Book your <em>stay</em></h2>
+          <p style="font-family:var(--serif);font-size:16px;font-style:italic;color:var(--ch2);margin:14px 0 28px">Fill in the form below and our reservations team will confirm your booking within 2 hours.</p>
+          <form onsubmit="submitContact(event)">
+            <div class="fr"><div class="fg"><label class="fl">Full Name *</label><input type="text" class="fi" placeholder="Your name" required></div><div class="fg"><label class="fl">Phone *</label><input type="tel" class="fi" placeholder="+977" required></div></div>
+            <div class="fg"><label class="fl">Email</label><input type="email" class="fi" placeholder="your@email.com"></div>
+            <div class="fr"><div class="fg"><label class="fl">Check-in Date *</label><input type="date" class="fi" required></div><div class="fg"><label class="fl">Check-out Date *</label><input type="date" class="fi" required></div></div>
+            <div class="fr"><div class="fg"><label class="fl">Guests</label><select class="fi"><option>1 Guest</option><option>2 Guests</option><option>3 Guests</option><option>4+ Guests</option></select></div><div class="fg"><label class="fl">Room Type</label><select class="fi"><option>Deluxe Single</option><option>Deluxe Double</option><option>Executive Room</option><option>Junior Suite</option><option>Suite</option></select></div></div>
+            <div class="fg"><label class="fl">Occasion</label><select class="fi"><option>Leisure</option><option>Business</option><option>Wedding</option><option>Honeymoon</option><option>Event / Function</option></select></div>
+            <div class="fg"><label class="fl">Special Requests</label><textarea class="fi" rows="3" placeholder="Any special requests or notes..."></textarea></div>
+            <button type="submit" class="fs">Send Reservation Request</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="soc-row">
+        <a href="#" class="soc-c soc-fb"><div class="soc-icon">&#128216;</div><div class="soc-name">Facebook</div><div class="soc-handle">@RamadaItahari</div><span class="soc-follow">Follow</span></a>
+        <a href="#" class="soc-c soc-ig"><div class="soc-icon">&#128247;</div><div class="soc-name">Instagram</div><div class="soc-handle">@ramadaitahari</div><span class="soc-follow">Follow</span></a>
+        <a href="https://wa.me/977" class="soc-c soc-tk"><div class="soc-icon">&#128172;</div><div class="soc-name">WhatsApp</div><div class="soc-handle">Direct Message</div><span class="soc-follow" style="border-color:#25d366;color:#25d366">Chat</span></a>
+      </div>
+    </div>
+  </div>
+  <footer id="footer6" style="background:var(--navy2);border-top:1px solid var(--line);padding:60px 64px 36px"><div class="footer-btm" style="justify-content:center;flex-direction:column;text-align:center;gap:18px"><div class="f-logo">Ramada</div><div class="footer-copy">&copy; 2025 Grand Central Hotel &mdash; Ramada by Wyndham Itahari &middot; All Rights Reserved</div><div class="footer-soc" style="justify-content:center"><a class="footer-si" href="#">&#128216;</a><a class="footer-si" href="#">&#128247;</a><a class="footer-si" href="#">&#127925;</a><a class="footer-si" href="#">&#128172;</a></div></div></footer>
+</div>
+
+</div><!-- /page-wrap -->
+
+<!-- LIGHTBOX -->
+<div id="lb">
+  <div id="lb-wrap">
+    <button class="lb-arr" id="lb-prev" onclick="lbNav(-1)">&#8592;</button>
+    <img id="lb-img" src="" alt="">
+    <button class="lb-arr" id="lb-next" onclick="lbNav(1)">&#8594;</button>
+    <button id="lb-x" onclick="closeLB()">&#10005;</button>
+    <div id="lb-cap"></div>
+    <div id="lb-ctr"></div>
+  </div>
+</div>
+
+<!-- BOOKING MODAL -->
+<div class="modal" id="bookModal">
+  <div class="modal-box">
+    <div class="modal-hd">
+      <div class="modal-ttl">Reserve Your Room</div>
+      <button class="modal-x" onclick="closeModal()">&#10005;</button>
+    </div>
+    <div class="modal-bd">
+      <form onsubmit="submitBook(event)">
+        <div class="fr"><div class="fg"><label class="fl">Full Name *</label><input type="text" class="fi" placeholder="Your full name" required></div><div class="fg"><label class="fl">Phone *</label><input type="tel" class="fi" placeholder="+977" required></div></div>
+        <div class="fg"><label class="fl">Email</label><input type="email" class="fi" placeholder="your@email.com"></div>
+        <div class="fr"><div class="fg"><label class="fl">Check-in *</label><input type="date" class="fi" required></div><div class="fg"><label class="fl">Check-out *</label><input type="date" class="fi" required></div></div>
+        <div class="fr"><div class="fg"><label class="fl">Guests</label><select class="fi"><option>1</option><option>2</option><option>3</option><option>4+</option></select></div><div class="fg"><label class="fl">Room Type</label><select class="fi"><option>Deluxe Single</option><option>Deluxe Double</option><option>Executive Room</option><option>Junior Suite</option><option>Suite</option></select></div></div>
+        <div class="fg"><label class="fl">Special Requests</label><textarea class="fi" rows="2" placeholder="Early check-in, dietary needs, etc."></textarea></div>
+        <button type="submit" class="fs">Confirm Reservation &#8594;</button>
+        <p style="font-family:var(--serif);font-size:12px;font-style:italic;color:var(--ch3);text-align:center;margin-top:14px">Our team will confirm within 2 hours &middot; Free cancellation 48h before check-in</p>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- FAB -->
+<div id="fab">
+  <button class="fab-bk" onclick="openModal()">Book<br>Now</button>
+  <a href="https://wa.me/977?text=Hi%2C%20I%27d%20like%20to%20book%20a%20room%20at%20Ramada%20Itahari." target="_blank" class="fab-wa">&#128172;</a>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ========================================================
+// DATA
+// ========================================================
+const roomsDB = [
+  {id:1,type:'Deluxe Single',area:'30 sqm',img:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=800&q=85',desc:'57 rooms with king bed, flat-screen HDTV, minibar, in-room safe, and city views over Itahari.',rate:'NPR 8,500',tags:['King Bed','Free WiFi','Minibar','Satellite TV','Coffee Maker','In-room Safe'],badge:'Most Popular'},
+  {id:2,type:'Deluxe Double',area:'34 sqm',img:'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=85',desc:'14 spacious rooms with twin beds, bathrobe and slippers, premium bath products and panoramic windows.',rate:'NPR 11,000',tags:['Twin Beds','Bathrobe','Slippers','Hair Dryer','Free WiFi','Safe'],badge:'For Couples'},
+  {id:3,type:'Executive Room',area:'38 sqm',img:'https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?w=800&q=85',desc:'4 executive rooms with workspace desk, premium toiletries, Club Lounge access, and complimentary newspaper.',rate:'NPR 14,500',tags:['Work Desk','Club Lounge','Premium WiFi','Nespresso','Turndown Service'],badge:'Business'},
+  {id:4,type:'Junior Suite',area:'52 sqm',img:'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=85',desc:'6 junior suites with separate sitting area, plush king bed, premium minibar, and bathtub with rain shower.',rate:'NPR 18,500',tags:['Sitting Area','King Bed','Minibar','Bathtub','Rain Shower','Premium WiFi'],badge:'Best Value'},
+  {id:5,type:'Suite',area:'72 sqm',img:'https://images.unsplash.com/photo-1564078516393-cf04bd966897?w=800&q=85',desc:'The crowning jewel of Ramada Itahari &mdash; a full suite with separate bedroom, living room, dining area, and panoramic views.',rate:'NPR 28,000',tags:['Separate Bedroom','Living Room','Dining Area','Double Bathtub','Butler Service','Complimentary Minibar'],badge:'Most Exclusive'}
+];
+
+const menuDB = [
+  {name:'Dal Bhat Tarkari',desc:'The quintessential Nepali meal &mdash; lentil soup, steamed rice, seasonal vegetable curry, achaar and papad.',price:'NPR 480',img:'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=600&q=85'},
+  {name:'Grilled Momo Platter',desc:'Jumbo momos filled with lamb or vegetables, pan-grilled to golden perfection with two house dipping sauces.',price:'NPR 580',img:'https://images.unsplash.com/photo-1625398407796-82650a8c0c38?w=600&q=85'},
+  {name:'Lamb Biryani',desc:'Aromatic basmati rice with slow-cooked Mustang lamb, saffron, caramelised onions and raita.',price:'NPR 780',img:'https://images.unsplash.com/photo-1563379091339-03246963d21e?w=600&q=85'},
+  {name:'Continental Breakfast Board',desc:'Smoked salmon, artisan cheese, cured meats, seasonal fruit, fresh-baked croissants and two eggs any style.',price:'NPR 950',img:'https://images.unsplash.com/photo-1533089860892-a7c6f0a88666?w=600&q=85'},
+  {name:'Chicken Tikka Masala',desc:'Tandoor-charred chicken in a rich tomato-cream masala, served with garlic naan and basmati rice.',price:'NPR 680',img:'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=600&q=85'},
+  {name:'Wild Mushroom Pasta',desc:'Linguine with foraged mushrooms, truffle oil, parmesan, and fresh herb crumb.',price:'NPR 620',img:'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=600&q=85'},
+  {name:'Grilled Himalayan Trout',desc:'Fresh trout from the Himalayan rivers &mdash; grilled with lemon butter, roasted vegetables and saffron risotto.',price:'NPR 1,100',img:'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=600&q=85'},
+  {name:'Wyndham Signature Cocktail',desc:'House signature &mdash; gin, elderflower, cucumber, basil and sparkling wine. Served poolside or at the terrace bar.',price:'NPR 750',img:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&q=85'}
+];
+
+const diningImgs = [
+  {src:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85',cap:'Grand Central Restaurant'},
+  {src:'https://images.unsplash.com/photo-1559329007-40df8a9345d8?w=1400&q=85',cap:'Lobby Lounge & Deli'},
+  {src:'https://images.unsplash.com/photo-1544025162-d76694265947?w=1400&q=85',cap:'Sky Terrace Bar'},
+  {src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&q=85',cap:'Pool Bar'}
+];
+
+const homeImgs = [
+  {src:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=85',cap:'The Grand Lobby'},
+  {src:'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=85',cap:'Health Club & Spa'},
+  {src:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85',cap:'All-Day Dining'},
+  {src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&q=85',cap:'Outdoor Pool'},
+  {src:'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&q=85',cap:'Grand Banquet Hall'},
+  {src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&q=85',cap:'Poolside Experience'}
+];
+
+const galleryImgs = [
+  {src:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=85',cap:'Grand Lobby'},
+  {src:'https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=1400&q=85',cap:'Deluxe Room'},
+  {src:'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1400&q=85',cap:'Outdoor Pool'},
+  {src:'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=1400&q=85',cap:'Spa'},
+  {src:'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=1400&q=85',cap:'Deluxe Double Room'},
+  {src:'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=1400&q=85',cap:'Banquet Hall'},
+  {src:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=1400&q=85',cap:'Restaurant'},
+  {src:'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1400&q=85',cap:'Junior Suite'}
+];
+
+const aboutImgs = [
+  {src:'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1400&q=85',cap:'Ramada by Wyndham Itahari'},
+  {src:'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1400&q=85',cap:'Junior Suite'}
+];
+
+let eventsDB = [
+  {id:1,name:'New Year Gala Dinner 2026',cat:'social',date:'2026-01-01',time:'7:00 PM',desc:'Ring in the New Year with a grand gala dinner featuring live music, a 5-course menu curated by our executive chef, unlimited beverages, and a midnight countdown spectacular.',price:'NPR 4,500 per person',img:'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=900&q=85',status:'past'},
+  {id:2,name:'Holi Celebration 2025 at Ramada',cat:'social',date:'2025-03-14',time:'11:00 AM',desc:'Celebrate the festival of colours at our outdoor lawn with natural colours, traditional sweets, a special Holi buffet, and live folk music. Kids welcome!',price:'NPR 1,200 per person',img:'https://images.unsplash.com/photo-1524253482453-3fed8d2fe12b?w=900&q=85',status:'past'},
+  {id:3,name:'Corporate Summit — Koshi Province',cat:'corporate',date:'2025-06-15',time:'9:00 AM',desc:'A landmark corporate gathering for business leaders across the Koshi Province. Full-day conference in Banquet Hall A with panel discussions, networking lunch, and awards dinner.',price:'Invitation Only',img:'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=85',status:'upcoming'},
+  {id:4,name:'Ramada Wedding Showcase 2025',cat:'wedding',date:'2025-07-20',time:'2:00 PM',desc:'Explore Eastern Nepal\'s premier wedding destination. Tour our banquet halls, outdoor lawn, honeymoon suite, and meet our wedding planning team. Complementary champagne and canapés.',price:'Free Entry',img:'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&q=85',status:'upcoming'},
+  {id:5,name:'Dashain Festival Buffet 2025',cat:'social',date:'2025-10-05',time:'12:00 PM',desc:'Grand Dashain celebration buffet featuring traditional Nepali cuisine, live musical performances, cultural dances, and a special Grand Central menu for the festive season.',price:'NPR 2,200 per person',img:'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=85',status:'upcoming'}
+];
+
+// ========================================================
+// RENDER FUNCTIONS
+// ========================================================
+function renderRooms() {
+  const grid = document.getElementById('roomsGrid');
+  if (!grid) return;
+  grid.style.display = 'grid';
+  grid.style.gridTemplateColumns = 'repeat(auto-fill, minmax(360px, 1fr))';
+  grid.style.gap = '3px';
+  grid.style.background = 'var(--lineG)';
+  grid.innerHTML = roomsDB.map(r => `
+    <div class="room-card" onclick="openLB(0,homeImgs)" style="cursor:pointer">
+      <div class="rc-img">
+        <img src="${r.img}" alt="${r.type}" loading="lazy">
+        <div class="rc-ov"><div class="rc-ov-type">${r.badge||''}</div><div class="rc-ov-name">${r.type}</div></div>
+        <div style="position:absolute;top:14px;left:14px;background:var(--gold);color:var(--navy);font-family:var(--sans);font-size:8px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:4px 11px">${r.area}</div>
+      </div>
+      <div class="rc-body">
+        <div class="rc-type">${r.type}</div>
+        <div class="rc-name">${r.type}</div>
+        <div class="rc-desc">${r.desc}</div>
+        <div class="rc-tags">${r.tags.map(t=>`<span class="rc-tag">${t}</span>`).join('')}</div>
+        <div class="rc-foot">
+          <div><div class="rc-rate">${r.rate}</div><div class="rc-per">per night &middot; incl. taxes</div></div>
+          <button class="rc-btn" onclick="openModal();event.stopPropagation()">Book Now</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderMenuHighlights() {
+  const grid = document.getElementById('menuHighlightGrid');
+  if (!grid) return;
+  grid.innerHTML = menuDB.map(it => `
+    <div class="mh rv" onclick="openLB(0,diningImgs)">
+      <div class="mh-img"><img src="${it.img}" alt="${it.name}" loading="lazy"></div>
+      <div class="mh-body">
+        <div class="mh-name">${it.name}</div>
+        <div class="mh-desc">${it.desc}</div>
+        <div class="mh-price">${it.price}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+const catMap = {wedding:'&#128146; Wedding',corporate:'&#128188; Corporate',social:'&#127881; Social',conference:'&#127908; Conference',special:'&#10024; Special',seasonal:'&#127810; Seasonal'};
+
+function renderUpcoming() {
+  const list = eventsDB.filter(e => e.status !== 'past');
+  const cont = document.getElementById('upcomingList');
+  if (!cont) return;
+  if (!list.length) { cont.innerHTML = '<p style="font-family:var(--serif);font-style:italic;color:rgba(245,234,212,.3);padding:28px 0">No upcoming events at the moment. Check back soon.</p>'; return; }
+  cont.innerHTML = list.map(ev => {
+    const d = new Date(ev.date);
+    const day = d.getDate();
+    const mon = d.toLocaleDateString('en',{month:'short'}).toUpperCase();
+    const target = new Date(ev.date + 'T' + (ev.time||'18:00')).getTime();
+    const now = Date.now();
+    const diff = target - now;
+    const days = Math.max(0,Math.floor(diff/86400000));
+    const hrs = Math.max(0,Math.floor((diff%86400000)/3600000));
+    const mins = Math.max(0,Math.floor((diff%3600000)/60000));
+    return `
+      <div class="ev-card rv">
+        <div class="ev-card-img">
+          <img src="${ev.img}" alt="${ev.name}" loading="lazy">
+          <div class="ev-date-badge"><div class="evdb-day">${day}</div><div class="evdb-mon">${mon}</div></div>
+          ${ev.status==='live'?'<div class="ev-live">Live Now</div>':''}
+        </div>
+        <div class="ev-body">
+          <div class="ev-cat">${catMap[ev.cat]||'&#10024; Event'}</div>
+          <div class="ev-title">${ev.name}</div>
+          <div class="ev-desc">${ev.desc}</div>
+          <div class="ev-meta">
+            <span class="ev-mi">&#128197; ${d.toLocaleDateString('en',{year:'numeric',month:'long',day:'numeric'})}</span>
+            ${ev.time?`<span class="ev-mi">&#128336; ${ev.time}</span>`:''}
+            <span class="ev-mi">&#127973; ${ev.price}</span>
+          </div>
+          <div class="ev-cd" id="cd-${ev.id}">
+            <div class="cd-unit"><div class="cd-num" id="cdd-${ev.id}">${days}</div><div class="cd-lbl">Days</div></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><div class="cd-num" id="cdh-${ev.id}">${hrs}</div><div class="cd-lbl">Hrs</div></div>
+            <div class="cd-sep">:</div>
+            <div class="cd-unit"><div class="cd-num" id="cdm-${ev.id}">${mins}</div><div class="cd-lbl">Min</div></div>
+          </div>
+          <div class="ev-acts">
+            <a href="https://wa.me/977?text=Hi%2C%20I%27d%20like%20to%20book%20for%20${encodeURIComponent(ev.name)}%20at%20Ramada%20Itahari." class="btn-primary" target="_blank" style="font-size:10px;padding:12px 28px">Book Spot</a>
+            <button class="btn-outline" style="font-size:10px;padding:11px 24px" onclick="openEvPhoto(${ev.id})">View Photo</button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  startCountdowns();
+}
+
+function renderPast() {
+  const list = eventsDB.filter(e => e.status === 'past');
+  const cont = document.getElementById('pastList');
+  if (!cont) return;
+  if (!list.length) { cont.innerHTML = '<p style="font-family:var(--serif);font-style:italic;color:rgba(245,234,212,.3);padding:28px 0;grid-column:1/-1">No past events found.</p>'; return; }
+  cont.innerHTML = list.map((ev,i) => `
+    <div class="past-c ${i===0?'feat':''}" onclick="openEvPhoto(${ev.id})">
+      <div class="past-iw"><img src="${ev.img}" alt="${ev.name}" loading="lazy"></div>
+      <div class="past-ov">
+        <div class="past-ov-cat">${catMap[ev.cat]||'Event'}</div>
+        <div class="past-ov-title">${ev.name}</div>
+        <div class="past-ov-date">${new Date(ev.date).toLocaleDateString('en',{year:'numeric',month:'long',day:'numeric'})} &middot; ${ev.time||''}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderAdminList() {
+  const cont = document.getElementById('adminEvList');
+  if (!cont) return;
+  if (!eventsDB.length) { cont.innerHTML = '<p style="font-family:var(--serif);font-style:italic;color:rgba(245,234,212,.3);padding:22px 0">No events. Add one above.</p>'; return; }
+  cont.innerHTML = eventsDB.map(ev => `
+    <div class="admin-ev-row">
+      <div class="admin-ev-thumb"><img src="${ev.img}" alt="${ev.name}" loading="lazy"></div>
+      <div><div class="admin-ev-name">${ev.name}</div><div class="admin-ev-date">${new Date(ev.date).toLocaleDateString('en',{year:'numeric',month:'short',day:'numeric'})} &middot; ${ev.time||''}</div></div>
+      <span class="ev-status ${ev.status==='upcoming'?'s-up':ev.status==='live'?'s-live':'s-past'}">${ev.status}</span>
+      <div class="a-btns">
+        <button class="abtn" onclick="toggleEvStatus(${ev.id})">Toggle</button>
+        <button class="abtn del" onclick="deleteEv(${ev.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function openEvPhoto(id) {
+  const ev = eventsDB.find(e => e.id === id);
+  if (!ev) return;
+  const hiSrc = ev.img.replace('w=900','w=1400');
+  openLB(0, [{src: hiSrc, cap: ev.name}]);
+}
+
+function submitEv(e) {
+  e.preventDefault();
+  const name = document.getElementById('evName').value;
+  const cat = document.getElementById('evCat').value;
+  const date = document.getElementById('evDate').value;
+  const time = document.getElementById('evTime').value;
+  const desc = document.getElementById('evDesc').value;
+  const price = document.getElementById('evPrice').value;
+  const status = document.getElementById('evStatus').value;
+  const imgInput = document.getElementById('imgInput');
+  let img = 'https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=900&q=85';
+  if (uploadedImgUrl) img = uploadedImgUrl;
+  const newEv = {id:Date.now(),name,cat,date,time,desc,price:price||'TBA',img,status};
+  eventsDB.unshift(newEv);
+  renderUpcoming(); renderPast(); renderAdminList();
+  document.getElementById('adminForm').reset();
+  uploadedImgUrl = null;
+  document.getElementById('uploadPrev').innerHTML = '';
+  showToast('Event added successfully!');
+}
+
+function toggleEvStatus(id) {
+  const ev = eventsDB.find(e => e.id === id);
+  if (!ev) return;
+  const cycle = {upcoming:'live',live:'past',past:'upcoming'};
+  ev.status = cycle[ev.status] || 'upcoming';
+  renderUpcoming(); renderPast(); renderAdminList();
+}
+
+function deleteEv(id) {
+  eventsDB = eventsDB.filter(e => e.id !== id);
+  renderUpcoming(); renderPast(); renderAdminList();
+  showToast('Event removed.');
+}
+
+let uploadedImgUrl = null;
+function handleUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    uploadedImgUrl = ev.target.result;
+    const prev = document.getElementById('uploadPrev');
+    prev.innerHTML = `<div class="prev-thumb"><img src="${uploadedImgUrl}" alt="Preview"><button class="prev-rm" onclick="uploadedImgUrl=null;this.parentNode.remove()">&#10005;</button></div>`;
+  };
+  reader.readAsDataURL(file);
+}
+
+// ========================================================
+// COUNTDOWNS
+// ========================================================
+function startCountdowns() {
+  const upcoming = eventsDB.filter(e => e.status !== 'past');
+  upcoming.forEach(ev => {
+    const target = new Date(ev.date + 'T' + (ev.time||'18:00')).getTime();
+    setInterval(() => {
+      const diff = target - Date.now();
+      if (diff < 0) return;
+      const days = Math.floor(diff/86400000);
+      const hrs = Math.floor((diff%86400000)/3600000);
+      const mins = Math.floor((diff%3600000)/60000);
+      const dd = document.getElementById('cdd-'+ev.id);
+      const dh = document.getElementById('cdh-'+ev.id);
+      const dm = document.getElementById('cdm-'+ev.id);
+      if (dd) dd.textContent = days;
+      if (dh) dh.textContent = hrs;
+      if (dm) dm.textContent = mins;
+    }, 60000);
+  });
+}
+
+// ========================================================
+// NAVIGATION
+// ========================================================
+let curPage = 'home';
+const pages = ['home','rooms','dining','events','about','contact'];
+function go(page) {
+  if (page === curPage) return;
+  const veil = document.getElementById('pw-veil');
+  veil.className = 'in';
+  setTimeout(() => {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById('page-' + page);
+    if (target) { target.classList.add('active'); window.scrollTo(0,0); }
+    pages.forEach(p => {
+      const btn = document.getElementById('nb-' + p);
+      if (btn) btn.classList.toggle('active', p === page);
+    });
+    curPage = page;
+    if (page === 'rooms') renderRooms();
+    if (page === 'dining') { renderMenuHighlights(); initReveal(); }
+    if (page === 'events') { renderUpcoming(); renderPast(); renderAdminList(); initReveal(); }
+    veil.className = 'out';
+    setTimeout(() => { veil.className = ''; initReveal(); }, 500);
+  }, 500);
+}
+
+function toggleMob() {
+  document.getElementById('mob').classList.toggle('open');
+}
+
+// ========================================================
+// LIGHTBOX
+// ========================================================
+let lbImgs = [], lbIdx = 0;
+function openLB(idx, imgs) {
+  lbImgs = imgs; lbIdx = idx;
+  const lb = document.getElementById('lb');
+  document.getElementById('lb-img').src = imgs[idx].src;
+  document.getElementById('lb-cap').textContent = imgs[idx].cap || '';
+  document.getElementById('lb-ctr').textContent = (idx+1) + ' / ' + imgs.length;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLB() {
+  document.getElementById('lb').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function lbNav(dir) {
+  lbIdx = (lbIdx + dir + lbImgs.length) % lbImgs.length;
+  const img = document.getElementById('lb-img');
+  img.style.opacity = '0';
+  setTimeout(() => {
+    img.src = lbImgs[lbIdx].src;
+    document.getElementById('lb-cap').textContent = lbImgs[lbIdx].cap || '';
+    document.getElementById('lb-ctr').textContent = (lbIdx+1) + ' / ' + lbImgs.length;
+    img.style.opacity = '1';
+  }, 200);
+}
+document.getElementById('lb').addEventListener('click', e => { if (e.target === document.getElementById('lb')) closeLB(); });
+document.addEventListener('keydown', e => {
+  if (!document.getElementById('lb').classList.contains('open')) return;
+  if (e.key === 'Escape') closeLB();
+  if (e.key === 'ArrowLeft') lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+});
+
+// ========================================================
+// MODAL
+// ========================================================
+function openModal() {
+  document.getElementById('bookModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('bookModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('bookModal').addEventListener('click', e => { if (e.target === document.getElementById('bookModal')) closeModal(); });
+function submitBook(e) {
+  e.preventDefault();
+  closeModal();
+  showToast('Reservation request sent! We will confirm within 2 hours.');
+}
+function submitContact(e) {
+  e.preventDefault();
+  showToast('Reservation request sent! Our team will be in touch soon.');
+  e.target.reset();
+}
+
+// ========================================================
+// TOAST
+// ========================================================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ========================================================
+// SCROLL REVEAL + STATS
+// ========================================================
+function initReveal() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); obs.unobserve(en.target); } });
+  }, {threshold:0.12});
+  document.querySelectorAll('.rv,.rv-l,.rv-r').forEach(el => {
+    if (!el.classList.contains('in')) obs.observe(el);
+  });
+  const statObs = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        const el = en.target;
+        const target = +el.dataset.count;
+        const suffix = el.dataset.suffix || '';
+        let current = 0;
+        const step = Math.ceil(target / 60);
+        const timer = setInterval(() => {
+          current = Math.min(current + step, target);
+          el.textContent = current.toLocaleString() + suffix;
+          if (current >= target) clearInterval(timer);
+        }, 24);
+        statObs.unobserve(el);
+      }
+    });
+  }, {threshold:0.5});
+  document.querySelectorAll('[data-count]').forEach(el => statObs.observe(el));
+}
+
+// ========================================================
+// NAV SCROLL
+// ========================================================
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('solid', window.scrollY > 60);
+});
+
+// ========================================================
+// CURSOR
+// ========================================================
+const cr = document.getElementById('cr'), cd = document.getElementById('cd');
+let mx = 0, my = 0, cx = 0, cy = 0;
+document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cd.style.left = mx + 'px'; cd.style.top = my + 'px'; });
+(function animCursor() {
+  cx += (mx - cx) * 0.12; cy += (my - cy) * 0.12;
+  cr.style.left = cx + 'px'; cr.style.top = cy + 'px';
+  requestAnimationFrame(animCursor);
+})();
+document.querySelectorAll('a,button,[onclick]').forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('chov'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('chov'));
+});
+
+// ========================================================
+// THREE.JS PARTICLES
+// ========================================================
+(function initThree() {
+  const canvas = document.getElementById('bgc');
+  const renderer = new THREE.WebGLRenderer({canvas, alpha:true, antialias:false});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(65, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z = 28;
+  const pCount = 2000;
+  const pos = new Float32Array(pCount * 3);
+  const colors = new Float32Array(pCount * 3);
+  const palette = [
+    [0.784,0.659,0.298],[0.91,0.788,0.431],[0.627,0.471,0.188],
+    [0.96,0.918,0.831],[0.98,0.98,0.95]
+  ];
+  for (let i = 0; i < pCount; i++) {
+    pos[i*3]   = (Math.random()-0.5)*80;
+    pos[i*3+1] = (Math.random()-0.5)*80;
+    pos[i*3+2] = (Math.random()-0.5)*80;
+    const c = palette[Math.floor(Math.random()*palette.length)];
+    colors[i*3]=c[0]; colors[i*3+1]=c[1]; colors[i*3+2]=c[2];
+  }
+  const pGeo = new THREE.BufferGeometry();
+  pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  pGeo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+  const pMat = new THREE.PointsMaterial({size:0.12,vertexColors:true,transparent:true,opacity:.55,sizeAttenuation:true});
+  scene.add(new THREE.Points(pGeo, pMat));
+  const shapes = [];
+  const shapeGeos = [
+    new THREE.TorusGeometry(1.8,0.04,10,50),
+    new THREE.IcosahedronGeometry(1.2,0),
+    new THREE.OctahedronGeometry(1.1,0),
+    new THREE.TorusGeometry(1.2,0.03,8,40)
+  ];
+  const wMat = new THREE.MeshBasicMaterial({color:0xc9a84c,wireframe:true,transparent:true,opacity:.08});
+  for (let i = 0; i < 14; i++) {
+    const geo = shapeGeos[Math.floor(Math.random()*shapeGeos.length)];
+    const mesh = new THREE.Mesh(geo, wMat.clone());
+    mesh.position.set((Math.random()-.5)*60,(Math.random()-.5)*60,(Math.random()-.5)*30);
+    mesh.userData = {rx:Math.random()*.004-.002,ry:Math.random()*.004-.002,bsy:Math.random()*2,bamp:(Math.random()*.3+.1)};
+    scene.add(mesh); shapes.push(mesh);
+  }
+  let t = 0;
+  (function animate() {
+    requestAnimationFrame(animate);
+    t += 0.008;
+    const pPos = pGeo.attributes.position.array;
+    for (let i = 0; i < pCount*3; i+=3) {
+      pPos[i+1] += 0.008;
+      if (pPos[i+1] > 40) pPos[i+1] = -40;
+    }
+    pGeo.attributes.position.needsUpdate = true;
+    shapes.forEach(m => {
+      m.rotation.x += m.userData.rx; m.rotation.y += m.userData.ry;
+      m.position.y += Math.sin(t + m.userData.bsy) * m.userData.bamp * 0.01;
+    });
+    renderer.render(scene, camera);
+  })();
+  window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+})();
+
+// ========================================================
+// EV TABS
+// ========================================================
+document.querySelectorAll('.evtab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.evtab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const f = btn.dataset.evf;
+    const up = document.getElementById('upcomingCont');
+    const past = document.getElementById('pastSec');
+    if (f === 'past') { if(up)up.style.display='none'; if(past)past.style.display='block'; }
+    else if (f === 'upcoming') { if(up)up.style.display='block'; if(past)past.style.display='none'; }
+    else { if(up)up.style.display='block'; if(past)past.style.display='block'; }
+  });
+});
+
+// ========================================================
+// LOADER + INIT
+// ========================================================
+window.addEventListener('load', () => {
+  const fill = document.getElementById('ldfill');
+  setTimeout(() => { fill.style.width = '100%'; }, 100);
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('out');
+    initReveal();
+  }, 2000);
+});
+</script>
+</body>
+</html>
